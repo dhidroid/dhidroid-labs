@@ -1,0 +1,37 @@
+## Small tools, open questions, and ideas taking shape
+
+The workbench is a place for exploration. These directions help us ask better questions about developer tools, local workflows, and the details that make software easier to understand.
+
+| Direction | What it explores | Current shape |
+| --- | --- | --- |
+| Tracekit | Following a request across the boundaries of a system | Prototype concept |
+| Fieldnotes | Keeping engineering decisions beside the work | Prototype concept |
+| Seedwork | Making small tools easier to start and maintain | Concept |
+
+## Tracekit — make a system’s path visible
+
+Tracekit explores a readable local trace for development. One request ID, ordered events, and useful timings can help someone follow what happened from the first handler to the storage layer.
+
+**Question to test:** Can a compact local trace explain a request end to end?
+
+The current direction is a concept preview. Its example events are illustrative, not a measured benchmark.
+
+## Fieldnotes — keep the reasoning next to the work
+
+Fieldnotes explores a local-first engineering notebook for decisions, alternatives, and the context behind them. The first useful question is how to make a note easy to capture and useful to revisit when the original conversation has faded.
+
+**Question to test:** Can a decision stay useful after its original context fades?
+
+The early concept keeps writing and reading local, with synchronization treated as a separate problem to solve only if it proves necessary.
+
+## Seedwork — start small, leave good foundations
+
+Seedwork is a proposed checklist for tiny developer tools: explicit configuration, a tested core, helpful errors, and a first-run guide that matches a clean install.
+
+**Question to test:** What is the smallest foundation that is still useful?
+
+This is a workflow concept rather than a released product. The next experiment is to use it on a small real project and see which checks earn their place.
+
+## A note on the work
+
+These are exploratory project directions, not shipped products. Their interfaces and examples describe ideas to test, not verified outcomes. We share them so the questions and learning can be useful before an idea becomes a finished tool.
