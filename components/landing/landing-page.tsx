@@ -37,7 +37,7 @@ export async function LandingPage() {
         <ClientsSection clients={clients} />
         <CapabilitiesSection
           programmingLanguages={programmingLanguages}
-          hasLiveRepositoryData={repositories.length > 0}
+          hasLiveRepositoryData={programmingLanguages.length > 0}
         />
         <ProjectShowcase />
         <ProcessSection />

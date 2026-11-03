@@ -5,6 +5,9 @@ import { DevIcon, type DevIconName } from "@/components/ui/dev-icon";
 const languageIcons: Partial<Record<string, DevIconName>> = {
   TypeScript: "typescript",
   JavaScript: "javascript",
+  React: "react",
+  "Next.js": "nextjs",
+  "Node.js": "nodejs",
   Python: "python",
   Java: "java",
   Go: "go",
@@ -13,7 +16,7 @@ const languageIcons: Partial<Record<string, DevIconName>> = {
   Ruby: "ruby",
 };
 
-const fallbackLanguages = ["TypeScript", "JavaScript", "Python", "Java"];
+const fallbackLanguages = ["TypeScript", "React", "Next.js", "Node.js"];
 
 export function CapabilitiesSection({
   programmingLanguages,
@@ -40,6 +43,7 @@ export function CapabilitiesSection({
         <div className="intro-grid">
           <div
             className="stack-illustration"
+            role="group"
             aria-label={
               hasLiveRepositoryData
                 ? `Programming languages in public GitHub projects: ${languages.join(", ")}`
@@ -61,6 +65,7 @@ export function CapabilitiesSection({
                     ) : (
                       <span className="stack-icon-fallback" aria-label={language}>
                         <Braces size={25} strokeWidth={1.4} aria-hidden="true" />
+                        <span className="sr-only">{language}</span>
                       </span>
                     )}
                   </span>

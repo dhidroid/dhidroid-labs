@@ -92,12 +92,40 @@ Medium stories use Medium's public RSS feeds; no paid RSS service or API key is 
 The MageCDN social icon URLs are used for GitHub, X/Twitter, Medium, LinkedIn, Instagram, and Stack Overflow in the profile page. The icon assets are embedded as SVG images from MageCDN.
 
 - The live Discord invitation is configured in `lib/site-content.ts`.
+- Public client stories live in `data/clients.json`, outside `public/`. Add a client only after the name, relationship, and summary are approved for public use; links must use HTTPS. The same JSON records feed the landing page and `/clients`.
+- `/work` reads public repositories from the configured GitHub profile. Repository details refresh on a five-minute cache interval; the landing page derives its programming-language icons from that same feed and falls back to a small set of areas the lab explores when GitHub is unavailable.
 - Main landing sections are in `components/landing/`.
 - Add journal articles as `content/blog/<slug>.md`; frontmatter fields and starter-content details are documented in `content/README.md`.
 - The journal index at `/blog` supports category filtering. Articles have permanent URLs, table-of-contents links, metadata, related reading, and missing-article handling.
 - Programming icons use the typed `DevIcon` component in `components/ui/dev-icon.tsx` and a pinned Devicon CDN release. Interface icons use Lucide React.
 - Locally hosted Unsplash photographs and source attribution are in `public/images/`.
 - Markdown reads and the footer's current year use explicit Next.js cache boundaries for this project's Cache Components configuration.
+
+## Routes
+
+- `/` — landing page and recent journal notes
+- `/work` — public GitHub repositories and exploratory project directions
+- `/clients` — approved client stories from `data/clients.json`
+- `/developers` and `/developers/[github-login]` — configured developer profiles and public GitHub data
+- `/practice`, `/about`, and `/contact` — how the lab works, its background, and contact invitation
+- `/journal` and `/blog/[slug]` — journal index and articles (`/blog` remains an alias)
+- Unmatched routes use the branded site-wide not-found page.
+
+Client records use this shape (the values below are placeholders, not published clients):
+
+```json
+{
+  "clients": [
+    {
+      "slug": "approved-client",
+      "name": "Approved client name",
+      "collaboration": "Product engineering",
+      "summary": "A short description approved for public use.",
+      "websiteUrl": "https://example.com"
+    }
+  ]
+}
+```
 
 There is no newsletter or email collection service. The conversation action opens the supplied Discord invitation.
 

@@ -30,7 +30,7 @@ export default function ClientsPage() {
             </p>
           </div>
         </header>
-        <section className="clients-page__logos" aria-labelledby="clients-page-title">
+        <section className="clients-page__stories" aria-labelledby="clients-page-title">
           <div className="container">
             <div className="clients-page__section-heading">
               <div>
@@ -38,7 +38,7 @@ export default function ClientsPage() {
                 <h2 id="clients-page-title">Work we can share.</h2>
               </div>
               <p>
-                Each entry comes from the private client list in our project
+                Each entry comes from the curated client list in our project
                 data. We publish it only when the work and attribution are
                 approved for sharing.
               </p>

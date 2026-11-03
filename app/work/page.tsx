@@ -7,7 +7,7 @@ import { developerProfiles, getGitHubRepositories } from "@/lib/developers";
 export const metadata: Metadata = {
   title: "The work",
   description:
-    "Explore Dhidroid’s early project directions: small tools and open questions taking shape on the workbench.",
+    "Explore public GitHub projects and early directions taking shape on the Dhidroid workbench.",
 };
 
 export default async function WorkPage() {
@@ -25,7 +25,7 @@ export default async function WorkPage() {
       title="Ideas with something practical to do."
       description="Small tools, open questions, and a few directions we’re exploring one useful step at a time."
       asideLabel="Current directions"
-      asideText="These projects are explorations shared in the open, with the questions still visible."
+      asideText="Public projects and early explorations are shared with their context and open questions."
       asideHref="/journal"
       asideLinkLabel="Read the field notes"
     >

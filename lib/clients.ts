@@ -30,7 +30,10 @@ function httpsUrl(value: unknown): string | undefined {
 
 /** Returns only complete, public client stories configured in the private JSON source. */
 export function getClients(): Client[] {
-  const records = (clientData as { clients?: ClientRecord[] }).clients ?? [];
+  const configuredClients = (clientData as { clients?: unknown }).clients;
+  const records = Array.isArray(configuredClients)
+    ? (configuredClients as ClientRecord[])
+    : [];
 
   return records.flatMap((record) => {
     const { slug, name, collaboration, summary } = record;
