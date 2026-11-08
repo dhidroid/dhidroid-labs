@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { MarkdownContent } from "@/components/blog/markdown-content";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
@@ -29,7 +30,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPostPage({ params }: Props) {
+export default function BlogPostPage({ params }: Props) {
+  return (
+    <Suspense
+      fallback={
+        <div className="journal-article" role="status" aria-live="polite">
+          <div className="journal-article-header">
+            <p className="section-label">The Dhidroid Journal</p>
+            <p className="section-heading" style={{ marginTop: 28 }}>
+              Opening the note…
+            </p>
+          </div>
+        </div>
+      }
+    >
+      <BlogPostContent params={params} />
+    </Suspense>
+  );
+}
+
+async function BlogPostContent({ params }: Props) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) notFound();

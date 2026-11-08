@@ -28,14 +28,20 @@ function updatedDate(value: string) {
 export function GitHubProjects({
   username,
   repositories,
+  loading = false,
 }: {
   username?: string;
   repositories: GitHubRepository[];
+  loading?: boolean;
 }) {
   const profileUrl = username ? `https://github.com/${encodeURIComponent(username)}` : "https://github.com";
 
   return (
-    <section className="github-work" aria-labelledby="github-work-title">
+    <section
+      className="github-work"
+      aria-labelledby="github-work-title"
+      aria-busy={loading}
+    >
       <div className="github-work__heading">
         <p className="section-label">Public work · GitHub</p>
         <h2 id="github-work-title">Projects in the open.</h2>
@@ -46,7 +52,11 @@ export function GitHubProjects({
         </p>
       </div>
 
-      {repositories.length ? (
+      {loading ? (
+        <div className="github-work__empty" role="status" aria-live="polite">
+          Loading public repositories…
+        </div>
+      ) : repositories.length ? (
         <div className="github-work__grid">
           {repositories.map((repository) => {
             const date = updatedDate(repository.updated_at);

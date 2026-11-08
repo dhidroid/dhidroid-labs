@@ -15,11 +15,16 @@
 @theme inline {
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains);
+  --font-display: var(--font-instrument-serif);
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
+}
+
+@utility font-display {
+  font-family: var(--font-display), Georgia, serif;
 }
 
 * {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import WorkContent from "@/content/pages/work.mdx";
 import { EditorialPage } from "@/components/site/editorial-page";
 import { GitHubProjects } from "@/components/work/github-projects";
@@ -10,15 +11,9 @@ export const metadata: Metadata = {
     "Explore public GitHub projects and early directions taking shape on the Dhidroid workbench.",
 };
 
-export default async function WorkPage() {
-  const primaryDeveloper = developerProfiles[0];
-  const repositories = primaryDeveloper
-    ? await getGitHubRepositories(
-        primaryDeveloper.githubUsername,
-        process.env.GITHUB_TOKEN,
-      )
-    : [];
+const primaryDeveloper = developerProfiles[0];
 
+export default function WorkPage() {
   return (
     <EditorialPage
       eyebrow="The work · On the workbench"
@@ -30,12 +25,27 @@ export default async function WorkPage() {
       asideLinkLabel="Read the field notes"
     >
       <>
-        <GitHubProjects
-          username={primaryDeveloper?.githubUsername}
-          repositories={repositories}
-        />
+        <Suspense
+          fallback={
+            <GitHubProjects
+              username={primaryDeveloper?.githubUsername}
+              repositories={[]}
+              loading
+            />
+          }
+        >
+          <WorkRepositories username={primaryDeveloper?.githubUsername} />
+        </Suspense>
         <WorkContent />
       </>
     </EditorialPage>
   );
+}
+
+async function WorkRepositories({ username }: { username?: string }) {
+  const repositories = username
+    ? await getGitHubRepositories(username, process.env.GITHUB_TOKEN)
+    : [];
+
+  return <GitHubProjects username={username} repositories={repositories} />;
 }

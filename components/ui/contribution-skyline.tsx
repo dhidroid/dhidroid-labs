@@ -230,6 +230,7 @@ export default function ContributionSkyline({
       ? palette.light
       : palettes[palette];
   const paletteStyle = {
+    "--contribution-0": "#e9ece5",
     "--contribution-1": colorLevels[0] ?? palettes.github[0],
     "--contribution-2": colorLevels[1] ?? palettes.github[1],
     "--contribution-3": colorLevels[2] ?? palettes.github[2],
@@ -237,6 +238,9 @@ export default function ContributionSkyline({
     "--transition-duration": `${Math.max(0, duration)}ms`,
     "--skyline-height-scale": Math.max(0.25, heightScale),
   } as React.CSSProperties;
+
+  const cellClassName =
+    "h-3 w-full rounded-[2px] border-0 p-0 shadow-[inset_0_0_0_1px_#0000000b] transition-[opacity,transform,box-shadow] duration-[350ms] hover:z-[1] hover:scale-[1.2] focus-visible:z-[1] focus-visible:scale-[1.2] focus-visible:outline-2 focus-visible:outline-ink focus-visible:outline-offset-2";
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!orbit || view !== "3d" || (event.pointerType === "mouse" && event.button !== 0)) return;
@@ -266,18 +270,24 @@ export default function ContributionSkyline({
   };
 
   return (
-    <section className={`contribution-skyline ${className}`} style={paletteStyle} aria-label="GitHub contribution activity">
-      <header className="contribution-skyline__header">
+    <section
+      className={`border border-line bg-[#fbfaf7] p-4 text-ink sm:p-[22px] ${className}`}
+      style={paletteStyle}
+      aria-label="GitHub contribution activity"
+    >
+      <header className="flex flex-col items-start justify-between gap-[18px] min-[901px]:flex-row min-[901px]:items-center">
         <div>
-          <p className="section-label">GitHub activity</p>
-          <h3>{title ?? <><strong>{numberFormat.format(total)}</strong> {noun} in the last year</>}</h3>
+          <p className="section-label mb-[9px] text-[8px] text-[#81867c]">GitHub activity</p>
+          <h3 className="text-[13px] leading-[1.5]">
+            {title ?? <><strong className="tabular-nums">{numberFormat.format(total)}</strong> {noun} in the last year</>}
+          </h3>
         </div>
         {showToggle && (
-          <div className="contribution-skyline__toggle" role="group" aria-label="Calendar view">
-            <button type="button" aria-pressed={view === "2d"} onClick={() => setView("2d")}>
+          <div className="inline-flex shrink-0 gap-[3px] border border-line bg-[#f2f1ec] p-[3px]" role="group" aria-label="Calendar view">
+            <button className="min-h-[29px] border-0 bg-transparent px-[9px] text-[9px] text-[#777c73] transition-colors aria-[pressed=true]:bg-[#30332d] aria-[pressed=true]:text-white" type="button" aria-pressed={view === "2d"} onClick={() => setView("2d")}>
               Grid
             </button>
-            <button type="button" aria-pressed={view === "3d"} onClick={() => setView("3d")}>
+            <button className="min-h-[29px] border-0 bg-transparent px-[9px] text-[9px] text-[#777c73] transition-colors aria-[pressed=true]:bg-[#30332d] aria-[pressed=true]:text-white" type="button" aria-pressed={view === "3d"} onClick={() => setView("3d")}>
               Skyline
             </button>
           </div>
@@ -285,32 +295,32 @@ export default function ContributionSkyline({
       </header>
 
       {showStats && (
-        <div className="contribution-skyline__stats" aria-label="Contribution summary">
-          <div><span>Total</span><strong>{numberFormat.format(total)}</strong></div>
-          <div><span>Busiest day</span><strong>{busiest?.count ? dateFormat.format(dayMs(busiest.date)) : "—"}</strong></div>
-          <div><span>Longest run</span><strong>{longestStreak} days</strong></div>
+        <div className="mt-[18px] grid grid-cols-3 gap-2 border-t border-[#e5e5dd] pt-5 pb-[17px] min-[520px]:gap-[15px]" aria-label="Contribution summary">
+          <div className="grid gap-[5px]"><span className="text-[9px] text-[#81867c]">Total</span><strong className="text-[13px] tabular-nums text-[#3c5e34]">{numberFormat.format(total)}</strong></div>
+          <div className="grid gap-[5px]"><span className="text-[9px] text-[#81867c]">Busiest day</span><strong className="text-[13px] tabular-nums text-[#3c5e34]">{busiest?.count ? dateFormat.format(dayMs(busiest.date)) : "—"}</strong></div>
+          <div className="grid gap-[5px]"><span className="text-[9px] text-[#81867c]">Longest run</span><strong className="text-[13px] tabular-nums text-[#3c5e34]">{longestStreak} days</strong></div>
         </div>
       )}
 
-      <div className="contribution-skyline__scroll">
-        <div className="contribution-skyline__calendar">
+      <div className="overflow-x-auto border-y border-[#e5e5dd] py-[15px] pb-4">
+        <div className="min-w-[720px]">
           <div
-            className="contribution-skyline__months"
+            className="mb-[7px] grid min-h-[17px] items-end text-[8px] text-[#82877e]"
             style={{ gridTemplateColumns: `34px repeat(${weeks.length}, minmax(10px, 1fr))` }}
             aria-hidden="true"
           >
             <span />
             {months.map((month, index) => <span key={index}>{month}</span>)}
           </div>
-          <div className="contribution-skyline__layout">
-            <div className="contribution-skyline__weekday-labels" aria-hidden="true">
+          <div className="grid grid-cols-[34px_minmax(0,1fr)] gap-[3px]">
+            <div className="grid grid-rows-[repeat(7,12px)] gap-[3px] text-[7px] leading-3 text-[#81867c]" aria-hidden="true">
               {weekdayNames.map((day, index) => (
-                <span key={day} className={index % 2 === 0 ? "" : "is-hidden"}>{day}</span>
+                <span key={day} className={index % 2 === 0 ? "" : "invisible"}>{day}</span>
               ))}
             </div>
             <div
               ref={gridRef}
-              className={`contribution-skyline__weeks contribution-skyline__weeks--${view}`}
+              className={`flex min-h-[102px] origin-[center_30%] items-start justify-between gap-[3px] transition-[transform,padding] duration-[var(--transition-duration)] ease-[cubic-bezier(0.2,0.7,0.2,1)] ${view === "3d" ? "cursor-grab touch-pan-y px-5 pt-3 pb-[30px] active:cursor-grabbing [--skyline-scale:0.91] max-[760px]:[--skyline-scale:0.82]" : ""}`}
               role="group"
               aria-label="Daily contributions for the last year"
               onPointerDown={handlePointerDown}
@@ -318,16 +328,23 @@ export default function ContributionSkyline({
               onPointerUp={handlePointerEnd}
               onPointerCancel={handlePointerEnd}
               onDoubleClick={() => setRotation({ x: 54, z: -12 })}
-              style={{ "--orbit-x": `${rotation.x}deg`, "--orbit-z": `${rotation.z}deg` } as React.CSSProperties}
+              style={{
+                "--orbit-x": `${rotation.x}deg`,
+                "--orbit-z": `${rotation.z}deg`,
+                transform: view === "3d"
+                  ? "perspective(900px) rotateX(var(--orbit-x, 54deg)) rotateZ(var(--orbit-z, -12deg)) scale(var(--skyline-scale))"
+                  : "none",
+              } as React.CSSProperties}
             >
               {weeks.map((week, weekIndex) => (
-                <div className="contribution-skyline__week" key={weekIndex} role="group" aria-label={`Week starting ${week[0]?.date}`}>
+                <div className="grid min-w-0 flex-[1_1_0] grid-rows-[repeat(7,12px)] gap-[3px] [transform-style:preserve-3d]" key={weekIndex} role="group" aria-label={`Week starting ${week[0]?.date}`}>
                   {week.map((cell) => {
                     const index = cells.indexOf(cell);
                     const label = cell.count
                       ? `${numberFormat.format(cell.count)} ${cell.count === 1 ? unit : unitPlural} on ${dateFormat.format(dayMs(cell.date))}`
                       : `No ${unitPlural} on ${dateFormat.format(dayMs(cell.date))}`;
                     const dimmed = legendLevel >= 0 && cell.level !== legendLevel;
+                    const rise = `${cell.level * 2}px`;
                     return (
                       <button
                         key={cell.date}
@@ -337,7 +354,17 @@ export default function ContributionSkyline({
                         aria-label={label}
                         title={label}
                         tabIndex={focusedCell === index || (focusedCell < 0 && index === cells.length - 1) ? 0 : -1}
-                        className={dimmed ? "contribution-skyline__cell is-dimmed" : "contribution-skyline__cell"}
+                        className={`${cellClassName} ${dimmed ? "opacity-[0.22]" : ""}`}
+                        style={{
+                          backgroundColor: `var(--contribution-${cell.level})`,
+                          "--rise": rise,
+                          transform: view === "3d"
+                            ? "translateZ(calc(var(--rise) * var(--skyline-height-scale, 1))) translateY(calc(var(--rise) * -0.35))"
+                            : undefined,
+                          boxShadow: view === "3d"
+                            ? "0 calc(var(--rise) * var(--skyline-height-scale, 1)) 0 #263c24, 0 0 0 1px #0000000b"
+                            : undefined,
+                        } as React.CSSProperties}
                         onFocus={() => setFocusedCell(index)}
                         onKeyDown={(event) => handleCellKeyDown(event, index)}
                         onClick={() => onCellClick?.({ date: cell.date, count: cell.count })}
@@ -351,22 +378,24 @@ export default function ContributionSkyline({
         </div>
       </div>
 
-      <footer className="contribution-skyline__footer">
+      <footer className="flex flex-wrap items-center justify-between gap-[18px] pt-[15px] text-[8px] text-[#81867c]">
         <span>
           {footer ?? (view === "3d" && orbit
             ? "Drag to orbit · double-click to reset · use arrow keys to explore"
             : "Focus a day for details · use arrow keys to explore")}
         </span>
         {showLegend && (
-          <div className="contribution-skyline__legend" onMouseLeave={() => setLegendLevel(-1)}>
+          <div className="inline-flex items-center gap-1" onMouseLeave={() => setLegendLevel(-1)}>
             <span>Less</span>
             {[0, 1, 2, 3, 4].map((level) => (
               <button
                 key={level}
                 type="button"
                 data-level={level}
+                className="size-[11px] rounded-[2px] border-0 p-0 shadow-[inset_0_0_0_1px_#0000000b] transition-[opacity,transform,box-shadow] duration-[350ms] aria-[pressed=true]:outline aria-[pressed=true]:outline-1 aria-[pressed=true]:outline-ink aria-[pressed=true]:outline-offset-2"
                 aria-label={`Highlight ${["no", "light", "moderate", "heavy", "very heavy"][level]} activity days`}
                 aria-pressed={legendLevel === level}
+                style={{ backgroundColor: `var(--contribution-${level})` }}
                 onMouseEnter={() => setLegendLevel(level)}
                 onFocus={() => setLegendLevel(level)}
                 onBlur={() => setLegendLevel(-1)}

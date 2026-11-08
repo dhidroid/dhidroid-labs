@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import "./section-pages.css";
-import "./developers.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,12 +22,12 @@ const display = Instrument_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ||
-      (process.env.VERCEL_PROJECT_PRODUCTION_URL
-        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-        : "http://localhost:3000"),
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
   ),
   title: {
-    default: "Dhidroid — A workshop for curious minds",
+    default: "Dhidroid — curious minds building useful things",
     template: "%s · Dhidroid",
   },
   description:

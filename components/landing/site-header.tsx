@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,9 +8,38 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Brand } from "@/components/landing/brand";
 import { navigation } from "@/lib/site-content";
 
+function DesktopNavigationLinks({ pathname }: { pathname?: string }) {
+  return (
+    <nav className="desktop-nav" aria-label="Main navigation">
+      {navigation.map((item) => (
+        <Link
+          key={item.label}
+          href={item.href}
+          aria-current={
+            pathname &&
+            (item.href === pathname ||
+              (item.href === "/journal" && pathname.startsWith("/blog")) ||
+              (item.href === "/developers" && pathname.startsWith("/developers/")))
+              ? "page"
+              : undefined
+          }
+        >
+          {item.label}
+        </Link>
+      ))}
+      <Link className="button button-small button-dark" href="/contact">
+        Let’s talk <ArrowUpRight size={13} />
+      </Link>
+    </nav>
+  );
+}
+
+function PathAwareDesktopNavigation() {
+  return <DesktopNavigationLinks pathname={usePathname()} />;
+}
+
 export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
   useEffect(() => {
     if (!open) return;
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -28,26 +58,9 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
     >
       <div className="container header-inner">
         <Brand />
-        <nav className="desktop-nav" aria-label="Main navigation">
-          {navigation.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              aria-current={
-                item.href === pathname ||
-                (item.href === "/journal" && pathname.startsWith("/blog")) ||
-                (item.href === "/developers" && pathname.startsWith("/developers/"))
-                  ? "page"
-                  : undefined
-              }
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Link className="button button-small button-dark" href="/contact">
-            Let’s talk <ArrowUpRight size={13} />
-          </Link>
-        </nav>
+        <Suspense fallback={<DesktopNavigationLinks />}>
+          <PathAwareDesktopNavigation />
+        </Suspense>
         <button
           className="menu-toggle"
           onClick={() => setOpen(!open)}

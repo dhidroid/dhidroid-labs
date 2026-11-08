@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { DeveloperDetail } from "@/components/developers/developer-detail";
+import { SiteFooter } from "@/components/landing/site-footer";
+import { SiteHeader } from "@/components/landing/site-header";
 import { getAllPosts } from "@/lib/blog";
 import {
   developerProfiles,
@@ -31,7 +34,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function DeveloperPage({ params }: Props) {
+export default function DeveloperPage({ params }: Props) {
+  return (
+    <Suspense fallback={<DeveloperProfileLoading />}>
+      <DeveloperProfile params={params} />
+    </Suspense>
+  );
+}
+
+function DeveloperProfileLoading() {
+  return (
+    <>
+      <SiteHeader />
+      <main
+        id="main-content"
+        className="grid min-h-[clamp(480px,64svh,760px)] place-items-center overflow-hidden border-b border-line bg-[radial-gradient(circle_at_86%_25%,#e5eade_0,#e5eade00_26rem),#f6f5f1] text-ink"
+        aria-busy="true"
+      >
+        <div className="container py-[clamp(76px,10vw,124px)]">
+          <p className="section-label text-[#74796f]">Developer profile</p>
+          <h1 className="mt-5 max-w-[700px] font-display text-[clamp(46px,7vw,82px)] leading-[0.98] tracking-[-0.045em] text-balance">
+            Opening the profile…
+          </h1>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
+
+async function DeveloperProfile({ params }: Props) {
   const { slug } = await params;
   const config = getDeveloperConfig(slug);
   if (!config) notFound();
