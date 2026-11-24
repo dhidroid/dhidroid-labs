@@ -64,6 +64,13 @@ export function CustomNewsletter() {
       return;
     }
 
+    const key = adminKey.trim();
+    if (!key) {
+      setIsError(true);
+      setStatusMessage("Enter the admin key to send the newsletter.");
+      return;
+    }
+
     setLoading(true);
     setStatusMessage("");
     setIsError(false);
@@ -78,15 +85,11 @@ export function CustomNewsletter() {
         payload.testEmail = testEmail.trim();
       }
 
-      if (adminKey.trim()) {
-        payload.adminKey = adminKey.trim();
-      }
-
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(adminKey.trim() ? { "X-Admin-Key": adminKey.trim() } : {}),
+          "X-Admin-Key": key,
         },
         body: JSON.stringify(payload),
       });
@@ -112,7 +115,7 @@ export function CustomNewsletter() {
     <div className="custom-nl-container">
       <div className="custom-nl-top-bar">
         <Link href="/newsletter" className="back">
-          ← Back to Newsletter
+          Back to Newsletter
         </Link>
         <div className="custom-nl-endpoint-tag">
           <span className="dot" style={{ background: endpoint ? "#22c55e" : "#eab308" }} />
@@ -390,12 +393,13 @@ export function CustomNewsletter() {
                 )}
 
                 <div className="custom-nl-field">
-                  <label htmlFor="adminKey">Admin Key (if configured on backend)</label>
+                  <label htmlFor="adminKey">Admin Key</label>
                   <input
                     id="adminKey"
                     name="adminKey"
                     type="password"
-                    placeholder="Enter secret key if required..."
+                    autoComplete="off"
+                    required
                     value={adminKey}
                     onChange={(e) => setAdminKey(e.target.value)}
                   />
@@ -411,8 +415,8 @@ export function CustomNewsletter() {
                     {loading
                       ? "Sending newsletter…"
                       : sendMode === "test"
-                      ? "Send Test Newsletter"
-                      : "Broadcast Custom Newsletter"}
+                        ? "Send Test Newsletter"
+                        : "Broadcast Custom Newsletter"}
                   </button>
                 </div>
 

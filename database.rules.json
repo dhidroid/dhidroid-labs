@@ -1,0 +1,9 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "smtpAudit": {
+      ".indexOn": ["finishedAt", "status", "action"]
+    }
+  }
+}

@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { Dev } from "./dev";
 import { Ico } from "./icons";
 import { Radial, Track, type TreeNode } from "./charts";
-import { pipeline } from "./data";
+import { pipeline, projects } from "./data";
 import { HeroArt } from "./heroart";
 import { TechMarquee, Clients, Reviews } from "./social";
 
@@ -61,36 +60,21 @@ export default function Home() {
       </section>
 
       <section className="wrap" id="hub">
-        <div className="hub-eyebrow">
-          <span className="hub-pill">How we think</span>
-        </div>
-        <h2 className="hub-h">
-          The right product starts<br />with the right question.
-        </h2>
-        <p className="hub-sub">
-          Before deciding <em>what</em> to build, we ask <strong>who it's for</strong> and <strong>what they're actually trying to get done</strong>. The answers shape the scope, the technology and the first release.
+        <h2 id="work">Inside the Dhidroid Labs portfolio</h2>
+        <p className="portfolio-intro">
+          Dhidroid Labs is a founder-led, one-person studio. These independent prototypes
+          show how the studio approaches mobile software, document search and everyday business workflows.
         </p>
-        <div className="hub-qs">
-          {[
-            ["Who is using this?", "Name a real person, not a market segment. The specific user determines every design decision."],
-            ["What are they doing today?", "The existing workaround — a spreadsheet, a WhatsApp group, a manual process — shows what your product has to beat."],
-            ["What's the one thing it must do?", "If you can't describe the core value in a sentence, the scope is too wide for a first release."],
-            ["How will you know it worked?", "Choose a measurable signal before building. Not 'people like it' — something you can observe."],
-          ].map(([q, a]) => (
-            <div key={q} className="hub-q">
-              <span className="hub-q-dot" />
-              <div>
-                <strong>{q}</strong>
-                <p>{a}</p>
-              </div>
-            </div>
+        <div className="cards portfolio-projects">
+          {projects.map((project) => (
+            <Link key={project.slug} href={`/projects/${project.slug}`} className="c">
+              <span className="ic"><Ico n={project.icon} /></span>
+              <small className="tag">{project.type}</small>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+            </Link>
           ))}
         </div>
-        <div className="stage one">
-          <div className="chart scroll"><Radial data={tree} label="Services offered by Dhidroid Labs and the tools or deliverables behind each" /></div>
-        </div>
-        <p className="cap">Seven services — and the tools or deliverables behind each.</p>
-        <div className="three four">{values.map(([a, b]) => <p key={a}><strong>{a}</strong>{b}</p>)}</div>
       </section>
 
       <section className="wrap" id="services">
@@ -98,15 +82,11 @@ export default function Home() {
         <div className="cards">
           {build.map(([i, t, b]) => <Link key={t} href="/services" className="c"><span className="ic"><Ico n={i} /></span><h3>{t}</h3><p>{b}</p></Link>)}
         </div>
-      </section>
-
-      <section className="wrap" id="work">
-        <h2>Selected experiments and engineering work<br /><span>each labelled by status and ownership</span></h2>
-        <div className="cards">
-          {[["Expense Tracker", "Offline-first mobile experience.", "react"], ["Talent Matching Explorer", "Structured AI assessment concept.", "python"], ["Knowledge Assistant", "Retrieval-focused question answering.", "python"]].map(([t, b, d]) => (
-            <Link key={t} href="/projects" className="c"><h3>{t}</h3><p>{b} Independent prototype.</p><div className="stk"><Dev n={d} /></div></Link>
-          ))}
+        <div className="stage one">
+          <div className="chart scroll"><Radial data={tree} label="Services offered by Dhidroid Labs and the tools or deliverables behind each" /></div>
         </div>
+        <p className="cap">Seven services — and the tools or deliverables behind each.</p>
+        <div className="three four">{values.map(([a, b]) => <p key={a}><strong>{a}</strong>{b}</p>)}</div>
       </section>
 
       <section className="wrap" id="engineering">

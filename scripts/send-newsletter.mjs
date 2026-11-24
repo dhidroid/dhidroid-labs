@@ -13,6 +13,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import nodemailer from "nodemailer";
+import { closeSmtpAudit, sendAuditedMail } from "../functions/smtp-audit/index.cjs";
 
 // Load environment variables from .env if present
 function loadEnv() {
@@ -179,7 +180,7 @@ async function sendDirectSmtp(recipientEmail) {
   const html = renderHtml({ first_name: "Friend" });
   const text = renderText({ first_name: "Friend" });
 
-  const info = await transporter.sendMail({
+  const info = await sendAuditedMail(transporter, "newsletter_cli", "newsletter_test", {
     from: mailFrom,
     to: recipientEmail,
     subject: newsletterData.subject,
@@ -238,7 +239,7 @@ async function main() {
       return;
     } catch (smtpErr) {
       console.error(`Direct SMTP delivery failed: ${smtpErr.message}`);
-      process.exit(1);
+      process.exitCode = 1;
     }
   }
 
@@ -246,11 +247,11 @@ async function main() {
     console.error(
       `Broadcast delivery requires either the Firebase Functions endpoint (NEXT_PUBLIC_NEWSLETTER_API_URL) to query subscribers, or local Firestore connection.`
     );
-    process.exit(1);
+    process.exitCode = 1;
   }
 }
 
 main().catch((err) => {
   console.error("Fatal error:", err.message);
-  process.exit(1);
-});
+  process.exitCode = 1;
+}).finally(closeSmtpAudit);

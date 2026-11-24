@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getMDXFiles } from "../../../lib/mdx";
-import { Dev } from "../../dev";
 import { Ico } from "../../icons";
 import { Cta } from "../../cta";
 
@@ -30,7 +29,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="sub post">
-      <Link href="/blog" className="back">← All articles</Link>
+      <Link href="/blog" className="back">  All articles</Link>
       <header className="sh">
         {post.fm.icon && <span className="ic" style={{ display: "inline-grid", placeItems: "center", width: 40, height: 40, marginBottom: 16, background: "#f1f1ee", borderRadius: 10, boxShadow: "inset 0 1px 1px #fff, 0 0 0 1px var(--line)" }}><Ico n={post.fm.icon} /></span>}
         <h1>{post.fm.title}</h1>
@@ -41,7 +40,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       </header>
       <div className="pb mdx-body" dangerouslySetInnerHTML={{ __html: post.html }} />
       <div className="pn">
-        {prev ? <Link href={`/blog/${prev.slug}`}>← {prev.fm.title}</Link> : <span />}
+        {prev ? <Link href={`/blog/${prev.slug}`}>  {prev.fm.title}</Link> : <span />}
         {next ? <Link href={`/blog/${next.slug}`}>{next.fm.title} →</Link> : <span />}
       </div>
       <Cta h="Get notes like this by email." p="New articles and lab experiments, sent when they're ready." />

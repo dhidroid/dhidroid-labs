@@ -27,7 +27,7 @@ export default async function ProjectMDX({ params }: { params: Promise<{ slug: s
 
   return (
     <main className="sub proj">
-      <Link href="/projects" className="back">← All projects</Link>
+      <Link href="/projects" className="back">  All projects</Link>
       <header className="sh">
         <small className="tag" style={{ display: "block", marginBottom: 10 }}>{p.fm.type}</small>
         <h1>{p.fm.title}</h1>
@@ -44,7 +44,7 @@ export default async function ProjectMDX({ params }: { params: Promise<{ slug: s
       </div>
       <div className="pb mdx-body" dangerouslySetInnerHTML={{ __html: p.html }} />
       <div className="pn">
-        {prev ? <Link href={`/projects/${prev.slug}`}>← {prev.fm.title}</Link> : <span />}
+        {prev ? <Link href={`/projects/${prev.slug}`}>  {prev.fm.title}</Link> : <span />}
         {next ? <Link href={`/projects/${next.slug}`}>{next.fm.title} →</Link> : <span />}
       </div>
       <Cta h="Facing a similar problem?" p="Tell us what you're trying to solve and we'll suggest a practical first step." />

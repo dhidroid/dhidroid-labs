@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.next-dev/
 
 out/
 dist/
@@ -16,3 +17,6 @@ test-results/
 .env
 .secret.local
 functions/lib/
+
+# Firebase Admin service account keys
+*-firebase-adminsdk-*.json

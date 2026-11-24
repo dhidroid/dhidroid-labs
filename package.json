@@ -9,8 +9,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "firebase:deploy": "npx --yes firebase-tools deploy --only functions,firestore:rules",
-    "firebase:emulate": "npx --yes firebase-tools emulators:start --only functions,firestore",
+    "firebase:deploy": "npx --yes firebase-tools deploy --only functions,firestore:rules,database",
+    "firebase:emulate": "npx --yes firebase-tools emulators:start --only functions,firestore,database",
     "newsletter:send": "node scripts/send-newsletter.mjs",
     "brief:send": "node scripts/send-brief.mjs"
   },
@@ -23,6 +23,7 @@
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.4.6",
     "d3": "^7.9.0",
+    "firebase-admin": "^13.10.0",
     "next": "^15.0.0",
     "nodemailer": "^10.6.1",
     "react": "^19.0.0",

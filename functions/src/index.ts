@@ -12,7 +12,10 @@ import {
   defineString,
 } from "firebase-functions/params";
 import { onRequest } from "firebase-functions/v2/https";
+import { onValueCreated } from "firebase-functions/v2/database";
 import nodemailer from "nodemailer";
+import { projectBrief, projectBriefReceipt, subscriptionConfirmation } from "../mail/transactional.cjs";
+import { auditPath, notifyAudit, sendAuditedMail, type SmtpAuditRecord } from "../smtp-audit/index.cjs";
 import {
   NewsletterData,
   renderNewsletterHtml,
@@ -33,7 +36,27 @@ const SMTP_PASS = defineSecret("SMTP_PASS");
 const ADMIN_KEY = defineString("ADMIN_KEY", { default: "" });
 const MAIL_FROM = defineString("MAIL_FROM");
 const MAIL_TO = defineString("MAIL_TO", { default: "dhinesh4668@gmail.com" });
+const SMTP_AUDIT_TO = defineString("SMTP_AUDIT_TO", { default: "dhinesh4668@outlook.com" });
 const TOKEN_LIFETIME_MS = 24 * 60 * 60 * 1000;
+
+function createSmtpTransport() {
+  return nodemailer.createTransport({
+    host: SMTP_HOST.value(),
+    port: SMTP_PORT.value(),
+    secure: SMTP_SECURE.value(),
+    auth: { user: SMTP_USER.value(), pass: SMTP_PASS.value() },
+  });
+}
+
+export const notifySmtpAudit = onValueCreated(
+  { ref: `/${auditPath}/{auditId}`, region: "us-central1", secrets: [SMTP_PASS], timeoutSeconds: 60 },
+  async (event) => {
+    const record = event.data.val() as SmtpAuditRecord;
+    if (record.notifyVia === "firebase") {
+      await notifyAudit(createSmtpTransport(), event.data.ref, record, MAIL_FROM.value(), SMTP_AUDIT_TO.value());
+    }
+  },
+);
 
 const subscriberCollection = db.collection("newsletterSubscribers");
 const tokenCollection = db.collection("newsletterConfirmationTokens");
@@ -82,18 +105,6 @@ function isValidEmail(email: unknown): email is string {
     email.length <= 254 &&
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
   );
-}
-
-function createConfirmationEmail(siteOrigin: string, token: string) {
-  const confirmationUrl = new URL("/newsletter", siteOrigin);
-  confirmationUrl.searchParams.set("confirm", token);
-  const url = confirmationUrl.toString();
-
-  return {
-    subject: "Confirm your Dhidroid Labs newsletter subscription",
-    text: `Confirm your subscription to the Dhidroid Labs newsletter:\n\n${url}\n\nThis link expires in 24 hours. If you did not request this, you can ignore this email.`,
-    html: `<p>Confirm your subscription to the Dhidroid Labs newsletter:</p><p><a href="${url}">Confirm subscription</a></p><p>This link expires in 24 hours. If you did not request this, you can ignore this email.</p>`,
-  };
 }
 
 export const newsletterSignup = onRequest(
@@ -188,61 +199,22 @@ export const newsletterSignup = onRequest(
         return;
       }
 
-      const transport = nodemailer.createTransport({
-        host: SMTP_HOST.value(),
-        port: SMTP_PORT.value(),
-        secure: SMTP_SECURE.value(),
-        auth: { user: SMTP_USER.value(), pass: SMTP_PASS.value() },
-      });
+      const transport = createSmtpTransport();
 
       const recipient = MAIL_TO.value() || "dhinesh4668@gmail.com";
 
-      const studioHtml = `
-        <div style="font-family:Inter,Arial,sans-serif;max-width:600px;margin:auto;padding:28px;background:#fbfbf8;border-radius:12px;border:1px solid #e4e3de;color:#262323;">
-          <h2 style="font-family:'Instrument Serif',Georgia,serif;font-size:28px;margin-top:0;color:#262323;">New Project Brief Received</h2>
-          <p style="font-size:14px;color:#7a7674;">Submitted via Dhidroid Labs website contact form.</p>
-          <table style="width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;">
-            <tr><td style="padding:8px 0;font-weight:600;width:120px;color:#7a7674;">Client Name:</td><td style="padding:8px 0;font-weight:600;color:#262323;">${name}</td></tr>
-            <tr><td style="padding:8px 0;font-weight:600;color:#7a7674;">Client Email:</td><td style="padding:8px 0;"><a href="mailto:${email}" style="color:#3b4bdf;">${email}</a></td></tr>
-            <tr><td style="padding:8px 0;font-weight:600;color:#7a7674;">Budget Range:</td><td style="padding:8px 0;color:#262323;">${budget}</td></tr>
-          </table>
-          <div style="background:#fff;padding:16px;border-radius:8px;border:1px solid #e4e3de;margin-top:12px;">
-            <h4 style="margin:0 0 8px;font-size:12px;text-transform:uppercase;color:#7a7674;letter-spacing:0.5px;">Project Description:</h4>
-            <p style="margin:0;white-space:pre-wrap;color:#262323;font-size:14px;line-height:1.6;">${message}</p>
-          </div>
-        </div>
-      `;
-
-      const studioText = `New Project Brief from ${name} (${email})\nBudget: ${budget}\n\nProject Description:\n${message}\n`;
-
       try {
-        await transport.sendMail({
+        await sendAuditedMail(transport, "firebase_function", "project_brief", {
           from: MAIL_FROM.value(),
           to: recipient,
           replyTo: email,
-          subject: `New Project Brief: ${name}`,
-          html: studioHtml,
-          text: studioText,
+          ...projectBrief({ name, email, budget, message }),
         });
 
-        // Client receipt acknowledgement
-        const clientHtml = `
-          <div style="font-family:Inter,Arial,sans-serif;max-width:600px;margin:auto;padding:24px;background:#fbfbf8;border-radius:12px;border:1px solid #e4e3de;color:#262323;">
-            <h2 style="font-family:'Instrument Serif',Georgia,serif;font-size:26px;margin-top:0;color:#262323;">Thank you for your project brief</h2>
-            <p style="font-size:15px;line-height:1.6;color:#4a4645;">Hi ${name},</p>
-            <p style="font-size:15px;line-height:1.6;color:#4a4645;">We received your enquiry and project details. We will review them and get back to you within one business day.</p>
-            <p style="font-size:15px;line-height:1.6;color:#4a4645;">If you'd like to talk directly in the meantime, you can also book a free 30-minute discovery call at <a href="${allowedOrigin}/contact" style="color:#3b4bdf;">dhidroid-labs.com/contact</a>.</p>
-            <p style="font-size:14px;color:#7a7674;margin-top:24px;">— Dhidroid Labs Team<br>Chennai, India</p>
-          </div>
-        `;
-        const clientText = `Hi ${name},\n\nThank you for reaching out to Dhidroid Labs. We received your project brief and will get back to you within one business day.\n\n— Dhidroid Labs Team`;
-
-        await transport.sendMail({
+        await sendAuditedMail(transport, "firebase_function", "project_brief_receipt", {
           from: MAIL_FROM.value(),
           to: email,
-          subject: "We received your project brief — Dhidroid Labs",
-          html: clientHtml,
-          text: clientText,
+          ...projectBriefReceipt(name, SITE_ORIGIN.value()),
         });
 
         await briefCollection.add({
@@ -272,7 +244,7 @@ export const newsletterSignup = onRequest(
       const configuredAdminKey = ADMIN_KEY.value() || process.env.ADMIN_KEY || "";
       const providedKey = request.body?.adminKey || request.get("x-admin-key");
 
-      if (configuredAdminKey && providedKey !== configuredAdminKey) {
+      if (!configuredAdminKey || providedKey !== configuredAdminKey) {
         response.status(401).json({ message: "Unauthorized. Invalid admin key." });
         return;
       }
@@ -287,12 +259,7 @@ export const newsletterSignup = onRequest(
         preferences_url: rawNewsletter.preferences_url || `${allowedOrigin}/newsletter`,
       };
 
-      const transport = nodemailer.createTransport({
-        host: SMTP_HOST.value(),
-        port: SMTP_PORT.value(),
-        secure: SMTP_SECURE.value(),
-        auth: { user: SMTP_USER.value(), pass: SMTP_PASS.value() },
-      });
+      const transport = createSmtpTransport();
 
       // A) Send to specific test email address
       if (testEmail) {
@@ -305,7 +272,7 @@ export const newsletterSignup = onRequest(
         const text = renderNewsletterText(newsletterData);
 
         try {
-          await transport.sendMail({
+          await sendAuditedMail(transport, "firebase_function", "newsletter_test", {
             from: MAIL_FROM.value(),
             to: testEmail,
             subject: newsletterData.subject || "Notes from the lab",
@@ -354,7 +321,7 @@ export const newsletterSignup = onRequest(
             const html = renderNewsletterHtml(personalData);
             const text = renderNewsletterText(personalData);
 
-            await transport.sendMail({
+            await sendAuditedMail(transport, "firebase_function", "newsletter_broadcast", {
               from: MAIL_FROM.value(),
               to: sub.email,
               subject: newsletterData.subject || "Notes from the lab",
@@ -460,17 +427,11 @@ export const newsletterSignup = onRequest(
 
     if (shouldSendEmail) {
       try {
-        const emailContent = createConfirmationEmail(allowedOrigin, token);
-        const transport = nodemailer.createTransport({
-          host: SMTP_HOST.value(),
-          port: SMTP_PORT.value(),
-          secure: SMTP_SECURE.value(),
-          auth: { user: SMTP_USER.value(), pass: SMTP_PASS.value() },
-        });
-        await transport.sendMail({
+        const transport = createSmtpTransport();
+        await sendAuditedMail(transport, "firebase_function", "subscription_confirmation", {
           from: MAIL_FROM.value(),
           to: email,
-          ...emailContent,
+          ...subscriptionConfirmation(SITE_ORIGIN.value(), token),
         });
         await subscriberRef.update({
           emailStatus: "sent",

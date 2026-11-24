@@ -101,7 +101,7 @@ export default function Pricing() {
       <div className="pr-grid">
         {plans.map((p) => (
           <div key={p.name} className={`pr-card${p.highlight ? " pr-card--hi" : ""}`}>
-            {p.tag && <span className="pr-tag">{p.tag}</span>}
+            <div className="pr-badge-row">{p.tag && <span className="pr-tag">{p.tag}</span>}</div>
             <h2 className="pr-name">{p.name}</h2>
             <div className="pr-price">
               <span className="pr-amt">{p.price}</span>

@@ -41,6 +41,8 @@ describe("CustomNewsletter Component", () => {
     const testEmailInput = screen.getByLabelText("Recipient Test Email");
     fireEvent.change(testEmailInput, { target: { value: "test@example.com" } });
 
+    fireEvent.change(screen.getByLabelText("Admin Key"), { target: { value: "test-admin-key" } });
+
     // Submit form
     const submitBtn = screen.getByRole("button", { name: "Send Test Newsletter" });
     fireEvent.click(submitBtn);
@@ -55,6 +57,7 @@ describe("CustomNewsletter Component", () => {
       "https://example.test/newsletterSignup",
       expect.objectContaining({
         method: "POST",
+        headers: expect.objectContaining({ "X-Admin-Key": "test-admin-key" }),
         body: expect.stringContaining('"action":"send_newsletter"'),
       })
     );
@@ -80,6 +83,7 @@ describe("CustomNewsletter Component", () => {
     // Switch to broadcast mode
     const broadcastRadio = screen.getByLabelText("Broadcast to Confirmed Subscribers");
     fireEvent.click(broadcastRadio);
+    fireEvent.change(screen.getByLabelText("Admin Key"), { target: { value: "test-admin-key" } });
 
     const submitBtn = screen.getByRole("button", {
       name: "Broadcast Custom Newsletter",

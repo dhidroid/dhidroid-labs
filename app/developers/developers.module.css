@@ -1,0 +1,285 @@
+.page :global(.band) {
+  margin-top: 0;
+}
+
+.directory {
+  display: grid;
+  gap: 16px;
+  margin-top: clamp(28px, 5vw, 52px);
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.8fr) minmax(0, 2fr);
+  align-items: center;
+  gap: clamp(22px, 4vw, 52px);
+  padding: clamp(16px, 4vw, 40px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+}
+
+.portrait {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.profileBody {
+  display: grid;
+  gap: 12px;
+}
+
+.profileBody > p,
+.collaborators p,
+.prose,
+.principles p,
+.timeline p {
+  color: color-mix(in srgb, var(--ink) 76%, var(--paper));
+}
+
+.profileBody .eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.name {
+  color: var(--ink);
+  text-align: left;
+  font-size: clamp(28px, 4.8vw, 54px);
+  letter-spacing: -.035em;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+
+.metadata,
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.metadata li,
+.stack li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.metadata svg {
+  flex-shrink: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.actions :global(.btn),
+.collaborators :global(.btn) {
+  height: auto;
+  min-height: 44px;
+  padding-block: 6px;
+  gap: 8px;
+}
+
+.collaborators {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  padding: clamp(16px, 3vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.collaborators h2 {
+  margin-bottom: 6px;
+  text-align: left;
+  color: var(--ink);
+  font-size: 20px;
+}
+
+.collaborators p {
+  max-width: 64ch;
+  font-size: 14px;
+}
+
+.back {
+  display: inline-flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.back:hover,
+.jumpLinks a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.jumpLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-top: 16px;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.jumpLinks a {
+  padding: 6px 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.section {
+  margin-top: clamp(42px, 7vw, 78px);
+  scroll-margin-top: 120px;
+}
+
+.section > h2 {
+  margin-bottom: 22px;
+  color: var(--ink);
+  text-align: left;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 255px), 1fr));
+  gap: 16px;
+}
+
+.cards :global(.ic) {
+  margin-bottom: 18px;
+}
+
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(18px, 4vw, 44px);
+}
+
+.prose {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  max-width: 62ch;
+}
+
+.principles,
+.timeline {
+  margin: 0;
+  padding: 0 clamp(16px, 3vw, 28px);
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.principles li,
+.timeline li {
+  padding-block: 18px;
+}
+
+.principles li + li,
+.timeline li + li {
+  border-top: 1px solid var(--line);
+}
+
+.principles strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.principles p,
+.timeline p {
+  font-size: 14px;
+}
+
+.stackTitle {
+  margin-block: 24px 12px;
+  font-size: 17px;
+}
+
+.stack li {
+  background: var(--card);
+}
+
+.stack img {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.timeline li {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 12px 24px;
+}
+
+.period {
+  padding-top: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.timeline h3 {
+  color: var(--ink);
+  font-size: 19px;
+}
+
+.organization {
+  margin-block: 2px 8px;
+  font-weight: 500;
+}
+
+.projects {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.projectHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.projects :global(.stk) {
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .profile,
+  .about,
+  .timeline li,
+  .projects {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .portrait {
+    width: min(48%, 176px);
+  }
+
+  .timeline li {
+    row-gap: 4px;
+  }
+}

@@ -3,6 +3,7 @@ import { CustomNewsletter } from "../custom-newsletter";
 
 export const metadata: Metadata = {
   title: "Custom Newsletter Composer | Dhidroid Labs",
+  robots: { index: false, follow: true },
   description:
     "Compose, preview, and dispatch custom newsletters using the Dhidroid Labs email template.",
 };

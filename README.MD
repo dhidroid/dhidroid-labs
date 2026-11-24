@@ -102,8 +102,8 @@ checks pass. Add the Cloudflare API token as a repository secret named
 | `npm run deploy` | Deploys the static site to Cloudflare Workers |
 | `npm test` | Runs component tests with Vitest and Testing Library |
 | `npm run test:e2e` | Runs browser end-to-end tests with Playwright |
-| `npm run firebase:deploy -- --project <PROJECT_ID>` | Deploys the newsletter function and Firestore rules |
-| `npm run firebase:emulate` | Starts the local Firebase Functions and Firestore emulators |
+| `npm run firebase:deploy -- --project <PROJECT_ID>` | Deploys the newsletter and SMTP notification functions, Firestore rules, and Realtime Database rules |
+| `npm run firebase:emulate` | Starts the Functions, Firestore, and Realtime Database emulators |
 | `npm run newsletter:send -- --test <email>` | Dispatches a test custom newsletter via CLI |
 | `npm run newsletter:send -- --broadcast` | Dispatches a custom newsletter broadcast to confirmed subscribers |
 
@@ -130,7 +130,7 @@ The studio provides a custom newsletter composition and dispatch system:
    npx --yes firebase-tools functions:secrets:set SMTP_PASS --project <PROJECT_ID>
    ```
 
-3. Deploy the Function and Firestore rules:
+3. Deploy the functions and database rules:
 
    ```bash
    npm run firebase:deploy -- --project <PROJECT_ID>
@@ -153,6 +153,25 @@ using the Firebase secret command above. Never put the Gmail app password in a
 For local emulators, use `http://localhost:3000` as `SITE_ORIGIN`, and provide
 `SMTP_PASS` in `functions/.secret.local`. The project-specific environment and
 secret files are ignored by Git.
+
+### SMTP audit
+
+Realtime Database stores each SMTP attempt under `smtpAudit/<auditId>`, including
+the action, source, UTC timestamps, and SMTP outcome. SMTP acceptance means the
+mail server accepted the message for delivery. Records and audit emails omit
+recipients, subjects, message bodies, and credentials. The rules deny client
+access to the audit database.
+
+The local Next.js API and direct SMTP scripts write the record and send a summary
+to `SMTP_AUDIT_TO`. Set `FIREBASE_DATABASE_URL` and authenticate Firebase Admin via
+Application Default Credentials. A service-account key can be configured using the
+server-only `GOOGLE_APPLICATION_CREDENTIALS` path. Keep the key file out of source
+control. Set a private `ADMIN_KEY` to enable newsletter test sends and broadcasts.
+
+For the Firebase-hosted newsletter function, `notifySmtpAudit` sends the summary
+on record creation and logs its own SMTP outcome on the same record. Firebase
+deployment requires the Blaze plan and the existing `SMTP_PASS` secret. Deploy the
+trigger in the same region as Realtime Database.
 
 ## Links
 

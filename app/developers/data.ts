@@ -13,9 +13,9 @@ export type DeveloperProfile = {
   email: string;
   bio: string;
   about: string[];
-  philosophy: string[];
+  philosophy: { title: string; description: string }[];
   skills: { name: string; level: string; icon: string; desc: string }[];
-  stack: string[];
+  stack: { icon: string; name: string }[];
   journey: { period: string; role: string; org: string; summary: string }[];
   featuredProjects: { slug: string; title: string; desc: string; stack: string[] }[];
   stats: { label: string; value: string }[];
@@ -28,7 +28,7 @@ export const developers: DeveloperProfile[] = [
     title: "Founder & Lead Software Engineer",
     role: "Full-Stack & Mobile Engineer",
     tagline: "React Native, TypeScript Web Platforms, APIs & Practical AI Automation",
-    image: "/dev-dhinesh.svg",
+    image: "/dev-dhidroid-github.jpg",
     location: "Chennai, India (IST / UTC+5:30)",
     experienceYears: "5+ years",
     github: "dhidroid",
@@ -42,9 +42,9 @@ export const developers: DeveloperProfile[] = [
       "Every project is approached with deliberate architecture: minimal complexity, automated verification pipelines, and transparent progress updates."
     ],
     philosophy: [
-      "Clarity before code: Agree on real user constraints, scopes, and milestones before writing software.",
-      "Ship working increments: Demonstrable software and verified tests over theoretical specifications.",
-      "Leave zero lock-in: Document architecture decisions and structure code so your team can own it effortlessly."
+      { title: "Agree on scope early", description: "Define user needs and delivery milestones before writing software." },
+      { title: "Ship working increments", description: "Share working previews and run automated tests as features land." },
+      { title: "Make handover straightforward", description: "Document architecture decisions and give your team the information it needs to own the code." },
     ],
     skills: [
       { name: "React Native & Mobile", level: "Advanced", icon: "mobile", desc: "Cross-platform iOS and Android apps with offline caching, native modules, and fluid gesture handling." },
@@ -54,7 +54,19 @@ export const developers: DeveloperProfile[] = [
       { name: "Cloud & DevOps", level: "Proficient", icon: "cloud", desc: "GitHub Actions CI/CD pipelines, Docker containerization, staging environments, and automated linting/testing." },
       { name: "Data & PostgreSQL", level: "Proficient", icon: "layers", desc: "Relational data modeling, query optimization, migrations, and local SQLite sync layers." }
     ],
-    stack: ["react", "typescript", "nextjs", "nodejs", "python", "fastapi", "postgresql", "docker", "git", "github", "figma"],
+    stack: [
+      { icon: "react", name: "React" },
+      { icon: "typescript", name: "TypeScript" },
+      { icon: "nextjs", name: "Next.js" },
+      { icon: "nodejs", name: "Node.js" },
+      { icon: "python", name: "Python" },
+      { icon: "fastapi", name: "FastAPI" },
+      { icon: "postgresql", name: "PostgreSQL" },
+      { icon: "docker", name: "Docker" },
+      { icon: "git", name: "Git" },
+      { icon: "github", name: "GitHub" },
+      { icon: "figma", name: "Figma" },
+    ],
     journey: [
       {
         period: "2024 – Present",
