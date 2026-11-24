@@ -7,7 +7,7 @@ const LI = "https://linkedin.com/in/dhidroid-rndev";
 const IND = " Independent prototype, not a Dhidroid Labs client engagement.";
 
 export const pages: Record<string, Pg> = {
-  about: { name: "About", title: "Technology should make the important things easier.", intro: "Dhidroid Labs is an independent software engineering studio built on a simple idea: good technology starts by understanding people and their problems. Clients work directly with the person shaping the technical decisions, so there are fewer handoffs and clearer feedback.",
+  about: { name: "About", title: "Technology should make the important things easier.", intro: "Dhidroid Labs is an independent software engineering studio in Chennai, India, building thoughtful web and mobile products and practical AI automation. You work directly with the engineer shaping the technical decisions, with clear trade-offs, fewer handoffs and feedback grounded in your users’ needs.",
     cards: [
       { icon: "bulb", title: "Useful by design", body: "We solve the actual problem, not the loudest trend." },
       { icon: "compass", title: "Clarity before code", body: "We explain trade-offs and agree on priorities first." },
@@ -93,8 +93,8 @@ export const pages: Record<string, Pg> = {
       { icon: "pin", title: "Where we work from", body: "Based in Chennai, India. Remote collaboration is possible." },
       { icon: "shield", title: "Before you write", body: "Please don’t send passwords, private customer records, financial identifiers or confidential source files." },
     ] },
-  privacy: { name: "Privacy", title: "Privacy policy", intro: "Draft pending legal review. It must be rewritten around the real tools, forms and data flows before publishing.", legal: true,
-    text: [["What we collect", "Details you send directly, such as your name, contact details and project information."], ["How we use it", "To reply to you, scope work and deliver projects. We do not sell personal data."], ["Sharing", "Only with providers needed to run the work, such as hosting, and only as required."], ["Your choices", "Ask us to access, correct or delete your information through the contact page."]] },
+  privacy: { name: "Privacy", title: "Privacy policy", intro: "Draft pending legal review. This summary describes the website’s current forms and optional analytics.", legal: true,
+    text: [["What we collect", "Details you send directly through the contact or newsletter forms. When Firebase Analytics is configured, Google Analytics may also collect page views, session activity, and browser or device information. Form contents and email addresses are not sent to Analytics."], ["How we use it", "Form details are used to reply to you and manage newsletter subscriptions. Analytics helps us understand aggregate site usage and successful sign-ups or enquiries. We do not sell personal data."], ["Sharing", "Form processing and analytics use the providers described above, including Firebase and Google when analytics is enabled."], ["Your choices", "Analytics is disabled until the site’s public Firebase configuration is provided. You can manage data and advertising settings through Google’s available controls. Ask us about information submitted through the forms using the contact page."]] },
   terms: { name: "Terms", title: "Terms of service", intro: "Draft pending legal review. It is not legal advice.", legal: true,
     text: [["Services", "Work is agreed in a written statement of work for each project."], ["Payment and scope", "Fees, milestones and scope changes are set out in that written agreement."], ["Ownership", "Rights to delivered work are defined in the agreement before work begins."], ["Liability", "Liability is limited to the extent the law permits and as set out in the agreement."]] },
 };

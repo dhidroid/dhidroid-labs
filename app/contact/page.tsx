@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { useState } from "react";
 import { Ico } from "../icons";
+import { trackSiteEvent } from "../../lib/firebase-analytics";
 
 // Cal.com element-click embed — loaded once on the client
 import Script from "next/script";
@@ -57,6 +58,9 @@ export default function Contact() {
     if (sentViaApi) {
       setSent(true);
       setLoading(false);
+      void trackSiteEvent("generate_lead", "contact_form").catch((error: unknown) => {
+        console.error("Firebase Analytics generate_lead event failed.", error);
+      });
     } else {
       // Fallback: open mailto link directly addressed to studio email
       const subject = encodeURIComponent(`Project brief from ${name}`);

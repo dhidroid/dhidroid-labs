@@ -29,6 +29,9 @@ npm install
 
 ### Development
 
+Copy `.env.example` to `.env` and add your local Firebase web-app values if you
+want Analytics enabled during development.
+
 ```bash
 npm run dev
 ```
@@ -47,12 +50,9 @@ The static site is generated in `out/`. To preview that build locally, run:
 npm run start
 ```
 
-To deploy it to Cloudflare Workers, configure
-`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`, then run:
-
-```bash
-npm run deploy
-```
+Cloudflare's Git integration publishes the site when changes are pushed to
+`main`. GitHub Actions does not deploy the site; it runs tests and builds on
+`main`, `production`, and pull requests.
 
 ### Tests
 
@@ -62,10 +62,27 @@ npm run test:e2e
 ```
 
 End-to-end tests run against the local Next.js development server. GitHub Actions
-runs both test suites and builds pull requests; pushes to `main` deploy after all
-checks pass. Add the Cloudflare API token as a repository secret named
-`CLOUDFLARE_API_TOKEN` and the account ID as the repository variable
-`CLOUDFLARE_ACCOUNT_ID` to enable automated deployment.
+runs both test suites and builds changes to `main`, `production`, and pull
+requests. Set the following repository variables under **Settings → Secrets and
+variables → Actions → Variables** so the build can use the Firebase web app and
+newsletter endpoint:
+
+- `NEXT_PUBLIC_NEWSLETTER_API_URL`
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
+- `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
+
+Firebase web configuration is public client configuration, not a server
+credential. Analytics is disabled until the required Firebase variables are
+configured. Firebase Analytics automatically reports page views and sessions;
+the site also records successful newsletter sign-ups and contact enquiries as
+conversion events. Use Firebase Console to inspect real-time reports and define
+audiences from those events. Analytics events never include form contents or
+email addresses.
 
 ## Project structure
 
@@ -74,6 +91,8 @@ checks pass. Add the Cloudflare API token as a repository secret named
 - `app/data.ts` - content and card data for dynamic pages
 - `app/chrome.tsx` - header and footer
 - `app/layout.tsx` - root layout and page metadata
+- `app/site-analytics.tsx` - optional Firebase Analytics initialization
+- `lib/firebase-analytics.ts` - analytics events for form conversions
 - `app/globals.css` - shared styles
 - `app/dev.tsx` - technology icon component
 - `app/icons.tsx` - interface icon component
@@ -99,7 +118,6 @@ checks pass. Add the Cloudflare API token as a repository secret named
 | `npm run dev` | Starts the development server |
 | `npm run build` | Creates an optimized static production build in `out/` |
 | `npm run start` | Previews the built static site with Wrangler |
-| `npm run deploy` | Deploys the static site to Cloudflare Workers |
 | `npm test` | Runs component tests with Vitest and Testing Library |
 | `npm run test:e2e` | Runs browser end-to-end tests with Playwright |
 | `npm run firebase:deploy -- --project <PROJECT_ID>` | Deploys the newsletter and SMTP notification functions, Firestore rules, and Realtime Database rules |
@@ -172,6 +190,19 @@ For the Firebase-hosted newsletter function, `notifySmtpAudit` sends the summary
 on record creation and logs its own SMTP outcome on the same record. Firebase
 deployment requires the Blaze plan and the existing `SMTP_PASS` secret. Deploy the
 trigger in the same region as Realtime Database.
+
+### Firebase Analytics
+
+Configure the `NEXT_PUBLIC_FIREBASE_*` values from your Firebase web app in the
+local `.env` and as GitHub Actions repository variables. Set up Google Analytics
+for the Firebase project and provide its Measurement ID. When configured, the
+browser SDK collects its standard page-view and session analytics, plus
+`sign_up` and `generate_lead` events after successful form submissions. Events
+contain only the event name and a generic method; they do not include
+identifying form fields. Firebase Realtime Database remains reserved for
+server-side SMTP audit records. Create and manage Analytics audiences in
+Firebase Console; the repository does not create audience definitions or an
+analytics dashboard.
 
 ## Links
 

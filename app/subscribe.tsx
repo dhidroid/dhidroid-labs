@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { trackSiteEvent } from "../lib/firebase-analytics";
 
 export function Subscribe({
   id,
@@ -68,6 +69,9 @@ export function Subscribe({
       if (!response.ok) throw new Error(result.message);
       setMessage(result.message);
       setEmail("");
+      void trackSiteEvent("sign_up", "newsletter").catch((error: unknown) => {
+        console.error("Firebase Analytics sign_up event failed.", error);
+      });
     } catch {
       setError(true);
       setMessage("We could not process your signup. Please try again later.");
