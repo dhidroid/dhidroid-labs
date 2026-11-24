@@ -50,6 +50,6 @@
     "esbuild@0.28.2": true,
     "protobufjs@7.6.6": true,
     "workerd@1.20261123.1": true,
-    "@firebase/util@1.15.3": true
+    "@firebase/util@1.12.1": true
   }
 }
