@@ -14,9 +14,9 @@ export default function Newsletter() {
   return (
     <main className="sub">
       <header className="sh"><h1>Notes from the lab.</h1><p>An occasional email on building mobile and enterprise software. No spam, and you can unsubscribe at any time.</p></header>
-      <div className="nlbox"><Subscribe id="page-email" large /><p>By subscribing you agree to receive emails from Dhidroid Labs. We use your email only to send the newsletter.</p></div>
+      <div className="nlbox"><Subscribe id="page-email" large confirmFromUrl /><p>By subscribing you agree to receive emails from Dhidroid Labs. We use your email only to send the newsletter.</p></div>
       <div className="cards">{gets.map(([i, t, b]) => <div className="c" key={t}><span className="ic"><Ico n={i} /></span><h3>{t}</h3><p>{b}</p></div>)}</div>
-      <p className="cap2" style={{ marginTop: 32 }}>Curious how it looks? <a href="/newsletter-template.html">Preview the email template</a>.</p>
+      <p className="cap2" style={{ marginTop: 32 }}>Curious how it looks? <a href="/newsletter-template.html">Preview the email template</a> · <a href="/newsletter/custom">Compose custom newsletter</a>.</p>
     </main>
   );
 }

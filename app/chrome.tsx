@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Subscribe } from "./subscribe";
 
+
 const cols: [string, [string, string][]][] = [
   ["Studio", [["About", "about"], ["Developers", "developers"], ["Process", "process"], ["Lab", "lab"]]],
   ["Work", [["Projects", "projects"], ["Tech stack", "tech-stack"], ["Engineering", "engineering"], ["Blog", "blog"]]],

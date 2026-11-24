@@ -1,0 +1,48 @@
+DHIDROID LABS
+Website and editorial implementation notes
+Based on the supplied company blueprint, version 1.0, 23 November 2026
+Internal reference for repository contributors
+
+Design
+Keep the blue sky and green meadow, off-white paper, deep ink, glass navigation,
+Inter body type and the italic Instrument Serif wordmark. Reuse the Tailwind theme
+and shared components. Keep figures meaningful at mobile widths and pair diagrams
+with ordinary HTML links and text. Keep original, optimized images in public/assets.
+
+Content
+Edit the JSON files in content/. The route registry feeds navigation, page bodies,
+sitemap and metadata. Add a unique title and description, a clear user problem,
+useful examples and one relevant next action. Maintain working inbound links.
+An editorial byline belongs to a real person or the publishing studio.
+Describe an illustrative concept as a proposal. Use completed-project language
+only when evidence and publication rights have been confirmed.
+
+Publication decisions
+[PROPOSED] Engineering ideas into useful products. Primary audiences are founders,
+operations teams and existing product teams. Discovery starts with one core workflow.
+[VERIFY] Registered name, incorporation, office, official domain, business email,
+phone, grievance contact, public developer names and links.
+[ONLY IF TRUE] Enable design or careers entries after confirming capacity or a real
+opportunity. Add client names, metrics, testimonials or credentials only with proof.
+[LEGAL REVIEW] Review the actual enquiry processor, transfer locations, retention,
+rights contact, cookie settings, website terms and required company disclosures.
+Add verified home/footer disclosures before enabling a public launch.
+[INTERNAL ONLY] Keep commercial tests, lead scoring, pricing hypotheses, outreach,
+sales targets and competitor research out of public content and structured data.
+
+Business development
+Start with a fit conversation, offer discovery for uncertain scope, then estimate
+a focused build. Agree deliverables, exclusions, dependencies, milestones, IP,
+acceptance and support in writing. Review qualified enquiries, discovery calls,
+wins and delivery variance against real baselines. Use opt-in, relevant outreach.
+
+Source map from the supplied brief
+Google Search Central SEO Starter Guide, Organization markup, XML sitemaps and
+Core Web Vitals. W3C WCAG 2.2. MCA OPC FAQ, Companies Act section 12, ICSI Rule 26,
+and PIB DPDP notices for professional review. Government MSME and competitor
+references inform positioning only. Never portray sources as customers or partners.
+
+Maintenance
+Run npm run check and npm run test:e2e after a fresh install. Review phone-width
+content and menus, all route relationships, privacy controls and contact failure
+and retry behavior. Use README.md for environment setup and release procedures.

@@ -14,25 +14,61 @@ const methods = [
 ];
 
 export default function Contact() {
+  const endpoint =
+    process.env.NEXT_PUBLIC_NEWSLETTER_API_URL ||
+    (process.env.NODE_ENV !== "test" ? "/api/newsletter" : undefined);
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    // Static export / no server action — open mailto fallback
+
     const f = e.currentTarget;
     const data = new FormData(f);
-    const name = data.get("name") as string;
-    const email = data.get("email") as string;
-    const budget = data.get("budget") as string;
-    const message = data.get("message") as string;
-    const subject = encodeURIComponent(`Project enquiry from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nBudget: ${budget}\n\n${message}`
-    );
-    window.location.href = `mailto:dhidroid@gmail.com?subject=${subject}&body=${body}`;
-    setTimeout(() => { setSent(true); setLoading(false); }, 400);
+    const name = (data.get("name") as string)?.trim() || "";
+    const email = (data.get("email") as string)?.trim() || "";
+    const budget = (data.get("budget") as string) || "Prefer not to say";
+    const message = (data.get("message") as string)?.trim() || "";
+
+    let sentViaApi = false;
+
+    if (endpoint) {
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "project_brief",
+            name,
+            email,
+            budget,
+            message,
+          }),
+        });
+        if (response.ok) {
+          sentViaApi = true;
+        }
+      } catch {
+        // Fall back to mailto below
+      }
+    }
+
+    if (sentViaApi) {
+      setSent(true);
+      setLoading(false);
+    } else {
+      // Fallback: open mailto link directly addressed to studio email
+      const subject = encodeURIComponent(`Project brief from ${name}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\nBudget: ${budget}\n\n${message}`
+      );
+      window.location.href = `mailto:dhinesh4668@gmail.com?subject=${subject}&body=${body}`;
+      setTimeout(() => {
+        setSent(true);
+        setLoading(false);
+      }, 400);
+    }
   }
 
   return (

@@ -13,5 +13,6 @@ test-results/
 .cache/
 .data/
 
-
 .env
+.secret.local
+functions/lib/
