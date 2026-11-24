@@ -54,6 +54,12 @@ Cloudflare's Git integration publishes the site when changes are pushed to
 `main`. GitHub Actions does not deploy the site; it runs tests and builds on
 `main`, `production`, and pull requests.
 
+The Cloudflare deployment is a static export: `/api/newsletter` is available
+only in local Next.js development and is not deployed to Cloudflare. Set
+`NEXT_PUBLIC_NEWSLETTER_API_URL` in the Cloudflare build environment to the
+HTTPS Firebase `newsletterSignup` function URL. Do not set it to the site
+origin or a relative `/api/...` path.
+
 ### Tests
 
 ```bash

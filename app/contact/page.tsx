@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Ico } from "../icons";
 import { trackSiteEvent } from "../../lib/firebase-analytics";
+import { getNewsletterApiEndpoint } from "../../lib/newsletter-api";
 
 // Cal.com element-click embed — loaded once on the client
 import Script from "next/script";
@@ -15,9 +16,7 @@ const methods = [
 ];
 
 export default function Contact() {
-  const endpoint =
-    process.env.NEXT_PUBLIC_NEWSLETTER_API_URL ||
-    (process.env.NODE_ENV !== "test" ? "/api/newsletter" : undefined);
+  const endpoint = getNewsletterApiEndpoint();
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 

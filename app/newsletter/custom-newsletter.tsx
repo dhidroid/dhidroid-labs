@@ -7,9 +7,10 @@ import {
   NewsletterData,
   renderNewsletterHtml,
 } from "../../lib/newsletter-template";
+import { getNewsletterApiEndpoint } from "../../lib/newsletter-api";
 
 export function CustomNewsletter() {
-  const endpoint = process.env.NEXT_PUBLIC_NEWSLETTER_API_URL;
+  const endpoint = getNewsletterApiEndpoint();
 
   const [form, setForm] = useState<NewsletterData>({ ...DEFAULT_NEWSLETTER_DATA });
   const [sendMode, setSendMode] = useState<"test" | "broadcast">("test");

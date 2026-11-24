@@ -16,6 +16,22 @@ describe("Subscribe", () => {
     expect(screen.getByRole("button", { name: "Opening soon" })).toBeDisabled();
   });
 
+  it("does not use a relative API route in a production static build", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("NEXT_PUBLIC_NEWSLETTER_API_URL", "/api/newsletter");
+    render(<Subscribe id="footer-email" />);
+
+    expect(screen.getByRole("button", { name: "Opening soon" })).toBeDisabled();
+  });
+
+  it("does not post to the site root when it is configured as the API endpoint", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("NEXT_PUBLIC_NEWSLETTER_API_URL", "https://dhidroid-labs.dhidroid.workers.dev");
+    render(<Subscribe id="footer-email" />);
+
+    expect(screen.getByRole("button", { name: "Opening soon" })).toBeDisabled();
+  });
+
   it("submits the email and displays the confirmation message", async () => {
     vi.stubEnv("NEXT_PUBLIC_NEWSLETTER_API_URL", "https://example.test/newsletterSignup");
     vi.stubGlobal(

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { trackSiteEvent } from "../lib/firebase-analytics";
+import { getNewsletterApiEndpoint } from "../lib/newsletter-api";
 
 export function Subscribe({
   id,
@@ -12,9 +13,7 @@ export function Subscribe({
   large?: boolean;
   confirmFromUrl?: boolean;
 }) {
-  const endpoint =
-    process.env.NEXT_PUBLIC_NEWSLETTER_API_URL ||
-    (process.env.NODE_ENV !== "test" ? "/api/newsletter" : undefined);
+  const endpoint = getNewsletterApiEndpoint();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
