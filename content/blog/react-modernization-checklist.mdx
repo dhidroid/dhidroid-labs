@@ -1,0 +1,40 @@
+---
+title: "A Practical Checklist Before Modernizing a React App"
+excerpt: "Modernization is not a rewrite. Understand what you have before deciding what to change."
+icon: code
+date: 2026-04-08
+readingTime: 5
+---
+
+Modernization is not a rewrite. The goal is a codebase that the team can work in confidently, not the newest possible stack.
+
+## Before you change anything
+
+**Map what the app actually does.** List the user-facing features and the integrations. Not what the product manager says it does — what you can observe it doing. This is the baseline that any modernized version has to match.
+
+**Find the seams.** Identify the parts that can be replaced independently without touching everything else. A well-structured React app has natural seams: individual components, data-fetching layers, routing, authentication. A poorly structured one has everything entangled.
+
+**Understand the test coverage.** No coverage means no safety net. Before modernizing anything, add tests to the parts you plan to change. They don't need to be perfect. They need to tell you when something that worked has broken.
+
+## Common modernization steps — and when they're worth it
+
+| Change | Worth it when |
+|---|---|
+| Upgrade React version | You need a specific API or security fix |
+| Migrate to TypeScript | The team is growing or the codebase is hard to change safely |
+| Replace class components | You're touching those files anyway |
+| Adopt a new state manager | The existing one is causing real bugs or performance problems |
+| Move to a new build tool | Build times are slowing the team down |
+| Restructure folders | Developers genuinely can't find things |
+
+## What to avoid
+
+**Big bang rewrites.** They almost always take longer than estimated, lose institutional knowledge, and introduce new bugs while fixing old ones. Incremental replacement, one seam at a time, is slower but safer.
+
+**Modernizing for its own sake.** Using the newest libraries doesn't make an app easier to maintain if the team doesn't understand them.
+
+**Skipping the documentation.** Write down what you changed and why. The next person to open the codebase will need it.
+
+## A useful frame
+
+Ask: "Will this change make it easier to build the next feature?" If the answer is yes, the modernization adds value. If the answer is "it's the right thing to do," that is worth examining more carefully.

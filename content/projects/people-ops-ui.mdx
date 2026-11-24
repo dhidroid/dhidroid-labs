@@ -1,0 +1,39 @@
+---
+title: "People Operations UI"
+type: "Interface exploration"
+summary: "Clearer employee self-service, attendance and admin screens."
+problem: "HR tools often hide common tasks behind dense menus."
+stack: ["react", "typescript"]
+icon: layers
+status: "Independent prototype"
+---
+
+## The problem
+
+HR systems accumulate features over time, and the most frequently used ones — checking leave balance, submitting a request, reviewing attendance — end up buried under menus designed for administrators rather than employees.
+
+Employees open the tool, can't find what they need quickly, and either ask HR directly or stop using it. The administrative overhead increases, and the tool that was meant to reduce it makes it worse.
+
+## What we explored
+
+### Self-service tasks in one place
+
+The employee-facing view surfaces the three or four most common actions immediately: check balance, submit a request, see recent attendance, view upcoming approvals. No navigation required for the common case.
+
+The design principle is that an employee should be able to complete the most frequent task in under thirty seconds, without training.
+
+### Attendance that reads at a glance
+
+The attendance view uses a simple calendar grid. Present, absent, half-day and holiday are distinct colours. The current month is the default. Totals for the month are shown below the grid.
+
+The employee can see their own record and can flag a discrepancy from the same screen. The flagging flow is a single text field and a submit button — not a form with eight required fields.
+
+### Separating frequent and rare admin actions
+
+The admin view distinguishes between things that happen daily (approve today's requests, check who is absent) and things that happen rarely (configure a new leave type, run an end-of-year report). The daily actions are on the first screen. The rare ones are in settings.
+
+This prevents the common case from being obscured by configuration options that most admins touch once a year.
+
+## Boundaries
+
+This is a UI exploration prototype built with React and TypeScript. No backend integration was implemented. The screens are interactive prototypes with mock data, not a production application.

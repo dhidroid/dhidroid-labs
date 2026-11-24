@@ -1,0 +1,40 @@
+---
+title: "What Makes an Internal Knowledge Assistant Trustworthy?"
+excerpt: "A knowledge assistant that people trust is one that shows its sources and admits what it doesn't know."
+icon: book
+date: 2026-05-15
+readingTime: 5
+---
+
+A knowledge assistant that people actually use is one that people trust. Trust, in this context, is specific: users need to be able to verify an answer and know when to rely on it.
+
+## The source problem
+
+A confident answer without a source cannot be checked. If your assistant says "the return policy is 14 days," the user needs to know where that came from — which document, which section, which version. Without the source, the user can't know whether the answer is current, complete or correct.
+
+**Every answer should come with a reference.** Not just the answer text — the actual passage it was drawn from, with a link or a document name and section.
+
+## What the system needs to do well
+
+**Retrieval before generation.** A retrieval-augmented system searches the actual documents first, then uses a language model to form a readable answer from the retrieved passages. This is more reliable than a model that generates answers from memory, because the memory of a large model is not your documentation.
+
+**Knowing when to say "I don't know."** A system that attempts to answer every question will sometimes answer incorrectly. A system that recognises when the answer isn't in the available documents and says so clearly is more useful — even if it answers fewer questions.
+
+**Respecting who can see what.** If your documents have different access levels, the retrieval system must respect them. A general assistant that returns confidential information to anyone who asks is a risk, not a tool.
+
+## What you should measure before expanding scope
+
+Run a small pilot. Track:
+
+- How often the retrieved sources actually contain the answer
+- How often the generated answer contradicts the source
+- How often users override or ignore the answer
+- How often users try to verify the answer in the original document
+
+If users are frequently going back to the original documents to check, the assistant isn't saving time — it's adding a step.
+
+## A realistic expectation
+
+An internal knowledge assistant works well for stable, well-documented information: policies, procedures, product specifications, onboarding guides. It works poorly for things that change frequently without documentation updates, or for decisions that require judgement.
+
+Build for the first category. Be honest about the second.

@@ -1,0 +1,43 @@
+---
+title: "Document Knowledge Assistant"
+type: "Retrieval concept"
+summary: "Answers from your documents, with sources and access rules."
+problem: "Teams lose time searching documents, and a confident answer without a source cannot be checked."
+stack: ["python"]
+icon: book
+status: "Independent prototype"
+---
+
+## The problem
+
+Internal documents hold a lot of institutional knowledge, but finding the right passage in the right document is slow — especially when documents are long, inconsistently named or spread across different systems.
+
+Large language models offer a way to query documents in natural language, but a generated answer without a source cannot be verified. If the answer is wrong, the user has no way to know.
+
+## What we explored
+
+### Retrieval before generation
+
+The system retrieves relevant document passages first, using vector similarity search over embedded document chunks. The language model then forms a readable answer from those retrieved passages — it does not generate from memory.
+
+This approach means the answer is grounded in the actual documents, and the source passages can be shown alongside the answer.
+
+### Source references in every response
+
+Every response includes the document name, section and the specific passage that the answer draws from. If the answer spans multiple documents, each source is listed.
+
+This allows the user to verify the answer, understand its provenance and decide how much to trust it. It also makes errors recoverable — if the retrieved passage is wrong, the user can see why.
+
+### Access-aware retrieval
+
+Not all documents should be visible to all users. The retrieval layer filters by access level before returning any passages. A user asking a question only sees answers drawn from documents they are permitted to read.
+
+This is a hard requirement for internal tools in most organisations, but it's often skipped in early-stage prototypes. We treated it as a first-class concern.
+
+### Handling the unknown
+
+When the answer is not in the available documents, the system says so — clearly, without attempting to generate a plausible-sounding response. "I don't have information about this in the documents you have access to" is more useful than a confident hallucination.
+
+## Boundaries
+
+This is an independent prototype built with Python. It uses no real organisational data. The access control layer is a demonstration of the architecture, not a production implementation. Performance on real document volumes was not tested.

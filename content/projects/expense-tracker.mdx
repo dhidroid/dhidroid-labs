@@ -1,0 +1,39 @@
+---
+title: "Expense Tracker"
+type: "Mobile app concept"
+summary: "A mobile-first, offline-aware view of daily spending."
+problem: "Logging spending is easiest at the moment it happens, which is usually on a phone with a patchy connection."
+stack: ["react", "typescript"]
+icon: mobile
+status: "Independent prototype"
+---
+
+## The problem
+
+Logging spending is easiest at the moment it happens — when you're at a shop, in a taxi, or finishing a meal. That moment rarely coincides with a reliable internet connection. Most expense apps assume connectivity, which means entries get skipped, forgotten or entered inaccurately later.
+
+## What we explored
+
+### Quick entry
+
+The most important design decision was making the common case — adding a single expense — take as few steps as possible. Amount, category, done. Notes and receipts are optional extras, not required fields.
+
+The entry screen opens immediately from a home screen shortcut. No login required after the first setup.
+
+### Local storage with sync
+
+All data is stored locally first. The app uses a queue-based sync that processes when a connection is available. Entries never fail because of connectivity — they just wait.
+
+Conflict resolution is straightforward: the last write wins for edits, and deletions are soft (marked deleted, synced, then cleaned up). This covers the overwhelming majority of real use cases.
+
+### Predictable navigation
+
+Categories are fixed and colour-coded. The monthly view shows spending by category as a simple bar. The history is chronological with search. No dashboards, no projections, no gamification.
+
+## Boundaries
+
+This is an independent prototype. It uses no production data and was not released to real users. The sync layer is a demonstration of the approach, not a production implementation. No backend service was built.
+
+## Technical notes
+
+Built with React Native and TypeScript. Local storage uses SQLite via a React Native community library. The UI uses a custom component set rather than a framework, to keep the interaction patterns exactly as designed.

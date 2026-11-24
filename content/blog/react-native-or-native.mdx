@@ -1,0 +1,40 @@
+---
+title: "React Native or Native Apps? A Product Decision Framework"
+excerpt: "Both can produce a good app. The decision is about your product and your team, not which technology is better."
+icon: mobile
+date: 2026-02-14
+readingTime: 5
+---
+
+Both choices can produce a good app. The decision is about your product and your team, not about which technology is better.
+
+## The case for React Native
+
+React Native lets one team build for Android and iOS from a shared codebase. When your screens are mostly forms, lists, navigation and content — which covers most business applications — the shared layer handles them well.
+
+The practical advantages:
+
+- One codebase, one set of business logic
+- Consistent behaviour across platforms without synchronising two separate implementations
+- Faster iteration when the team is small
+- Access to platform APIs and device features through the native module system when needed
+
+## The case for fully native development
+
+Fully native development makes sense when the product depends on deep platform-specific behaviour: advanced camera or audio pipelines, heavy graphics or game-like interactions, very new operating system features that cross-platform tools haven't caught up with, or tight performance budgets that the bridge layer would strain.
+
+## Four questions that clarify the decision
+
+**Which platforms do you need at launch?** If the answer is both Android and iOS, the case for React Native grows immediately.
+
+**Which device features are essential?** Standard camera, notifications, location, storage and networking are well-supported in React Native. Custom hardware integrations, AR pipelines or intensive audio DSP may need native work.
+
+**Who will maintain the app?** A small team with JavaScript skills can maintain a React Native app across platforms. Two native specialists costs roughly twice as much.
+
+**How much performance headroom does the experience really need?** Smooth scrolling, transitions and animations are achievable in React Native. A game engine or real-time signal processing is a different question.
+
+## A practical starting point
+
+If most answers point to shared screens and standard features, start with React Native. Write native modules only where they genuinely matter. You can always replace a component with a native implementation later — it's much harder to combine two diverged native codebases.
+
+The goal is a good experience for your users, not a correct answer to a technology debate.

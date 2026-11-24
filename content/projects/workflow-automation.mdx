@@ -1,0 +1,37 @@
+---
+title: "Business Workflow Automation"
+type: "Workflow concept"
+summary: "Intake, routing and update history in one traceable process."
+problem: "Requests arrive by email and chat, and nobody can see who owns what."
+stack: ["postgresql"]
+icon: gears
+status: "Independent prototype"
+---
+
+## The problem
+
+In many small and growing businesses, work requests arrive through email, chat messages and verbal conversations. There is no central view of what has been requested, who is responsible, what the status is or what has changed.
+
+The result is requests that fall through the gaps, duplicate effort, and time spent on status chasing rather than actual work.
+
+## What we explored
+
+### A single intake point
+
+A simple form with required fields replaces the ad-hoc arrival of requests. The required fields ensure that the information needed to act on the request is captured at the point of submission, not chased afterwards.
+
+The form is intentionally narrow — only what's needed to route and start the work. Additional information can be added later, but the core fields must be present before the request enters the system.
+
+### Rule-based routing
+
+Routing rules assign incoming requests to the right person or queue based on the values in the form. A maintenance request from one site goes to one team. A supplier query goes to another. The rules are configuration, not code — they can be updated without a deployment.
+
+### A complete history
+
+Every status change, assignment, comment and update is recorded with a timestamp and the identity of the person who made it. The history is append-only and cannot be edited.
+
+This creates a traceable record of what happened to every request, which is useful for review, for identifying bottlenecks and for resolving disputes.
+
+## Boundaries
+
+This is an independent prototype built with PostgreSQL as the primary data store. The routing engine and history model are implementations, not polished products. No production data was used. The UI layer was a minimal proof-of-concept only.

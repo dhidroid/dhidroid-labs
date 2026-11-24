@@ -1,0 +1,37 @@
+---
+title: "Talent Matching Explorer"
+type: "AI-assisted review concept"
+summary: "Structured role-fit review with explainable AI assistance."
+problem: "Reviewing many profiles against a role is slow, and unexplained scores are hard to trust."
+stack: ["python"]
+icon: users
+status: "Independent prototype"
+---
+
+## The problem
+
+Reviewing candidate profiles against a role description at any volume is slow and inconsistent. When AI tools assist with this, they often produce scores or rankings without explanation — which makes it impossible to verify whether the reasoning is sound or whether bias has been introduced.
+
+The result is that reviewers either ignore the AI suggestion or accept it without scrutiny. Neither is good.
+
+## What we explored
+
+### Criteria-first review
+
+The process begins with defining the role criteria before any candidate is evaluated. The reviewer specifies what matters — required experience, specific skills, indicators of fit — and the system uses those as the input, not a vague job description.
+
+This separates the question "what are we looking for?" from the question "how well does this profile match?" Answering both at once invites motivated reasoning.
+
+### Explanation alongside every suggestion
+
+For each profile, the system shows the specific passages it used to form a judgement, alongside the judgement itself. If a candidate scores highly for "API experience," the reviewer can see which lines from the profile led to that assessment.
+
+If the evidence is weak or missing, the score should be low. If the score is high but the evidence is thin, the reviewer can override it — and should.
+
+### Human decision at every step
+
+The system makes no final decisions. It surfaces and organises information. Every shortlist, every pass and every rejection is made by a person. The AI role is to reduce the volume of reading, not to replace the judgement.
+
+## Boundaries
+
+This is an independent prototype. It was not tested with real candidate data, and no conclusions were drawn about its performance on a real hiring process. The scoring approach is a demonstration of the explainability principle, not a validated model.
