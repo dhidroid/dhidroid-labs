@@ -1,6 +1,9 @@
 node_modules/
 .next/
 .next-dev/
+.open-next/
+.wrangler/
+.dev.vars*
 
 out/
 dist/
@@ -20,3 +23,8 @@ functions/lib/
 
 # Firebase Admin service account keys
 *-firebase-adminsdk-*.json
+
+# Sanity Functions
+functions/**/.env*
+functions/**/.build/
+functions/**/node_modules/

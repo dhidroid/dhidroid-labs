@@ -1,16 +1,19 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import { getMDXFiles } from "../../lib/mdx";
+import { getPosts } from "../../lib/published-content";
+import { pageMetadata } from "../../lib/seo";
 import { Ico } from "../icons";
 import { Cta } from "../cta";
+import { CmsImage } from "../cms-body";
 
-export const metadata: Metadata = {
-  title: "Blog | Dhidroid Labs",
-  description: "Practical notes on engineering decisions, small experiments and building software for real people.",
-};
+export function generateMetadata() {
+  return pageMetadata("/blog", {
+    title: "Blog | Dhidroid Labs",
+    description: "Practical notes on engineering decisions, small experiments and building software for real people.",
+  });
+}
 
-export default function Blog() {
-  const posts = getMDXFiles("blog");
+export default async function Blog() {
+  const posts = await getPosts();
   return (
     <main className="sub">
       <header className="sh">
@@ -20,10 +23,12 @@ export default function Blog() {
       <div className="cards">
         {posts.map((p) => (
           <Link key={p.slug} href={`/blog/${p.slug}`} className="c">
-            {p.fm.icon && <span className="ic"><Ico n={p.fm.icon} /></span>}
-            {p.fm.date && <span className="tag">{new Date(p.fm.date).toLocaleDateString("en-IN", { year: "numeric", month: "short" })}</span>}
-            <h3>{p.fm.title}</h3>
-            <p>{p.fm.excerpt ?? ""}</p>
+            {p.image?.url ? <CmsImage image={p.image} className="blog-card-image" /> : (
+              <span className="ic"><Ico n={p.icon ?? "news"} /></span>
+            )}
+            {p.date && <time className="tag" dateTime={p.date}>{new Date(p.date).toLocaleDateString("en-IN", { year: "numeric", month: "short", timeZone: "Asia/Kolkata" })}</time>}
+            <h3>{p.title}</h3>
+            <p>{p.summary}</p>
           </Link>
         ))}
       </div>

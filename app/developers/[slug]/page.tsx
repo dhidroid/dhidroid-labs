@@ -5,6 +5,7 @@ import { developers } from "../data";
 import { Dev } from "../../dev";
 import { Ico } from "../../icons";
 import { Cta } from "../../cta";
+import { pageMetadata } from "../../../lib/seo";
 import styles from "../developers.module.css";
 
 export const dynamicParams = false;
@@ -17,10 +18,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const dev = developers.find((profile) => profile.slug === slug);
   if (!dev) return {};
-  return {
+  return pageMetadata(`/developers/${slug}`, {
     title: `${dev.name} | Dhidroid Labs`,
     description: dev.bio,
-  };
+  });
 }
 
 export default async function DeveloperDetailPage({ params }: { params: Promise<{ slug: string }> }) {

@@ -1,12 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "../../lib/seo";
 import { FolderTree, Pyramid, Track, VModel, type FNode } from "../charts";
 import { pipeline } from "../data";
 
-export const metadata: Metadata = {
-  title: "Engineering practice | Dhidroid Labs",
-  description: "A reference delivery setup: GitHub Actions workflows, layered testing, a V-model system engineering flow and a clear repository structure.",
-};
+export function generateMetadata() {
+  return pageMetadata("/engineering", {
+    title: "Engineering practice | Dhidroid Labs",
+    description: "A reference delivery setup: GitHub Actions workflows, layered testing, a V-model system engineering flow and a clear repository structure.",
+  });
+}
 
 const workflow = `name: ci
 on:

@@ -1,8 +1,13 @@
-import type { Metadata } from "next";
 import { Ico } from "../icons";
 import { Subscribe } from "../subscribe";
+import { pageMetadata } from "../../lib/seo";
 
-export const metadata: Metadata = { title: "Newsletter | Dhidroid Labs", description: "Practical notes on building mobile and enterprise software, and experiments from the lab." };
+export function generateMetadata() {
+  return pageMetadata("/newsletter", {
+    title: "Newsletter | Dhidroid Labs",
+    description: "Practical notes on building mobile and enterprise software, and experiments from the lab.",
+  });
+}
 
 const gets = [
   ["pen", "Practical engineering notes", "Decision frameworks and checklists you can use on your own product."],

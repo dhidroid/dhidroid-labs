@@ -7,7 +7,8 @@ const LI = "https://linkedin.com/in/dhidroid-rndev";
 const IND = " Independent prototype, not a Dhidroid Labs client engagement.";
 
 export const pages: Record<string, Pg> = {
-  about: { name: "About", title: "Technology should make the important things easier.", intro: "Dhidroid Labs is an independent software engineering studio in Chennai, India, building thoughtful web and mobile products and practical AI automation. You work directly with the engineer shaping the technical decisions, with clear trade-offs, fewer handoffs and feedback grounded in your users’ needs.",
+  about: {
+    name: "About", title: "Technology should make the important things easier.", intro: "Dhidroid Labs is an independent software engineering studio in Chennai, India, building thoughtful web and mobile products and practical AI automation. You work directly with the engineer shaping the technical decisions, with clear trade-offs, fewer handoffs and feedback grounded in your users’ needs.",
     cards: [
       { icon: "bulb", title: "Useful by design", body: "We solve the actual problem, not the loudest trend." },
       { icon: "compass", title: "Clarity before code", body: "We explain trade-offs and agree on priorities first." },
@@ -15,8 +16,10 @@ export const pages: Record<string, Pg> = {
       { icon: "shield", title: "Responsible engineering", body: "Privacy, security and accessibility are part of the discussion from day one." },
       { icon: "pen", title: "Craft with restraint", body: "Good software does not need needless complexity." },
       { icon: "user", title: "The person behind the lab", body: "DhineshKumar Thirupathi, Founder and Software Engineer, focused on React Native, TypeScript, web platforms, APIs and applied AI.", href: LI },
-    ] },
-  services: { name: "Services", title: "Practical engineering for the product you need.", intro: "Every project has different constraints. We start with your users, systems and goals, then choose the services needed. You don’t need to commit to a large platform if a focused first release will do.",
+    ]
+  },
+  services: {
+    name: "Services", title: "Practical engineering for the product you need.", intro: "Every project has different constraints. We start with your users, systems and goals, then choose the services needed. You don’t need to commit to a large platform if a focused first release will do.",
     cards: [
       { icon: "code", title: "Web application development", body: "Dashboards, customer portals, internal tools and modern SaaS products.", stack: ["react", "typescript", "nextjs"] },
       { icon: "mobile", title: "Mobile application development", body: "Cross-platform Android and iOS products built with React Native.", stack: ["react", "typescript"] },
@@ -25,8 +28,10 @@ export const pages: Record<string, Pg> = {
       { icon: "server", title: "Backend, APIs and integrations", body: "The secure application logic and system connections behind a good interface.", stack: ["python", "postgresql"] },
       { icon: "cloud", title: "Cloud and DevOps", body: "Sensible delivery pipelines and operational visibility for your product.", stack: ["docker", "git"] },
       { icon: "chart", title: "Modernization and maintenance", body: "Improve an existing application without blindly rewriting everything." },
-    ] },
-  process: { name: "Process", title: "A clear process makes room for better work.", intro: "Whether you start from an idea or an existing system, each decision should be understandable and each milestone reviewable.",
+    ]
+  },
+  process: {
+    name: "Process", title: "A clear process makes room for better work.", intro: "Whether you start from an idea or an existing system, each decision should be understandable and each milestone reviewable.",
     track: [
       { k: "1", t: "Listen and discover", l: ["Problem statement,", "assumptions, risks"] },
       { k: "2", t: "Define the first release", l: ["Scope, milestones,", "acceptance criteria"] },
@@ -39,8 +44,10 @@ export const pages: Record<string, Pg> = {
       { icon: "file", title: "Written scope", body: "Scope, change control, and source code and data ownership are agreed before work starts." },
       { icon: "calendar", title: "Regular reviews", body: "Progress is shown through working demonstrations, and issues are recorded." },
       { icon: "scale", title: "Standards as reference", body: "Requirements, architecture and quality checks borrow from IEEE and ISO references such as IEEE/ISO/IEC 29148 and ISO/IEC 25010. Dhidroid Labs holds no ISO certification." },
-    ] },
-  "engagement-models": { name: "Engagement models", title: "Choose a way of working that fits the problem.", intro: "Pick the starting point that matches where your product is today. Every engagement begins with a written scope.",
+    ]
+  },
+  "engagement-models": {
+    name: "Engagement models", title: "Choose a way of working that fits the problem.", intro: "Pick the starting point that matches where your product is today. Every engagement begins with a written scope.",
     track: [
       { k: "A", t: "Discovery and planning", l: ["For ideas without a brief", "Fixed-scope workshop or fee"] },
       { k: "B", t: "Focused product build", l: ["For a clear first release", "Fixed price, changes quoted"] },
@@ -48,20 +55,26 @@ export const pages: Record<string, Pg> = {
     ],
     cards: [
       { icon: "bulb", title: "Not sure which fits?", body: "Describe the problem and we’ll recommend a practical starting point.", href: "/contact" },
-    ] },
-  lab: { name: "Lab", title: "A lab for things worth trying.", intro: "Not every useful idea starts as a polished product. The Lab is where we test new interactions, compare approaches and share lessons. Some ideas become products. Others become better questions.",
+    ]
+  },
+  lab: {
+    name: "Lab", title: "A lab for things worth trying.", intro: "Not every useful idea starts as a polished product. The Lab is where we test new interactions, compare approaches and share lessons. Some ideas become products. Others become better questions.",
     cards: [
       { icon: "gears", title: "Rust UI framework", body: "In exploration: a React Native-style UI framework written in pure Rust for web, desktop and mobile." },
       { icon: "bulb", title: "Keyboard backlight sync", body: "In exploration: a Mac and Windows utility that moves laptop keyboard lighting with the music." },
       { icon: "flask", title: "Suggest a problem worth solving", body: "Have an idea worth prototyping? Send it over.", href: "/contact" },
-    ] },
-  developers: { name: "Developers", title: "Meet the developer behind the lab.", intro: "Dhidroid Labs is a one-person studio, so you work directly with the engineer who builds your product. Specialists join a project only when it needs them.",
+    ]
+  },
+  developers: {
+    name: "Developers", title: "Meet the developer behind the lab.", intro: "Dhidroid Labs is a one-person studio, so you work directly with the engineer who builds your product. Specialists join a project only when it needs them.",
     cards: [
       { icon: "user", title: "DhineshKumar Thirupathi", body: "Founder and Software Engineer. React Native, TypeScript, web platforms, APIs and applied AI. Based in Chennai.", stack: ["react", "typescript", "nextjs", "nodejs", "python", "postgresql"], href: LI },
       { icon: "handshake", title: "Specialist collaborators", body: "Designers, QA and domain experts join a project when it needs them, and are named with their permission." },
       { icon: "users", title: "Want to collaborate?", body: "Developer or designer interested in working on projects together? Get in touch.", href: "/contact" },
-    ] },
-  "tech-stack": { name: "Tech stack", title: "Tools chosen for the product, not the trend.", intro: "The strongest experience is in JavaScript and TypeScript, React, React Native, APIs and Python-based AI integrations. The final choice follows what the product needs and what your team can maintain.",
+    ]
+  },
+  "tech-stack": {
+    name: "Tech stack", title: "Tools chosen for the product, not the trend.", intro: "The strongest experience is in JavaScript and TypeScript, React, React Native, APIs and Python-based AI integrations. The final choice follows what the product needs and what your team can maintain.",
     cards: [
       { icon: "code", title: "Web frontend", body: "Accessible, fast interfaces for SaaS products and internal tools.", stack: ["react", "nextjs", "typescript", "javascript"] },
       { icon: "mobile", title: "Mobile", body: "Cross-platform Android and iOS apps from one codebase.", stack: ["react", "typescript"] },
@@ -70,8 +83,10 @@ export const pages: Record<string, Pg> = {
       { icon: "cloud", title: "Cloud and delivery", body: "Repeatable pipelines and environments.", stack: ["docker", "git", "github", "azure"] },
       { icon: "pen", title: "Design handoff", body: "Design files turned into accessible, consistent components.", stack: ["figma"] },
       { icon: "shield", title: "Quality", body: "Static checks, layered tests and accessibility reviews on every change.", href: "/engineering" },
-    ] },
-  faq: { name: "FAQ", title: "Good questions lead to better projects.", intro: "Short answers about fit, technology, pricing, ownership and support.",
+    ]
+  },
+  faq: {
+    name: "FAQ", title: "Good questions lead to better projects.", intro: "Short answers about fit, technology, pricing, ownership and support.",
     text: [
       ["What kinds of projects are a good fit?", "Focused web or mobile products, clear system integrations, internal business tools and targeted AI or automation pilots. Projects work best when there is a defined problem and a realistic budget."],
       ["How do I start?", "Send a short description of what you're building — a rough idea and a timeline is enough. We'll reply within one business day and suggest a practical next step."],
@@ -85,18 +100,25 @@ export const pages: Record<string, Pg> = {
       ["Do you charge GST?", "GST is applicable as per Indian tax regulations and listed separately on invoices."],
       ["Can you guarantee a business outcome?", "No. We define measurable product goals and build toward them transparently."],
       ["Can you use an AI model with our documents?", "Possibly, after a review of permitted data, privacy, vendor terms, security requirements and human oversight. We don't recommend AI for decisions requiring judgement without a person in the loop."],
-    ] },
-  contact: { name: "Contact", title: "Tell us what you’re trying to solve.", intro: "You don’t need a polished specification. A short description of the problem, the people affected and what you hope to achieve is enough to begin.",
+    ]
+  },
+  contact: {
+    name: "Contact", title: "Tell us what you’re trying to solve.", intro: "You don’t need a polished specification. A short description of the problem, the people affected and what you hope to achieve is enough to begin.",
     cards: [
       { icon: "linkedin", title: "LinkedIn", body: "Send a message to start the conversation.", href: LI },
       { icon: "globe", title: "Portfolio", body: "See more background and projects.", href: "https://dhidroid.vercel.app" },
       { icon: "pin", title: "Where we work from", body: "Based in Chennai, India. Remote collaboration is possible." },
       { icon: "shield", title: "Before you write", body: "Please don’t send passwords, private customer records, financial identifiers or confidential source files." },
-    ] },
-  privacy: { name: "Privacy", title: "Privacy policy", intro: "Draft pending legal review. This summary describes the website’s current forms and optional analytics.", legal: true,
-    text: [["What we collect", "Details you send directly through the contact or newsletter forms. When Firebase Analytics is configured, Google Analytics may also collect page views, session activity, and browser or device information. Form contents and email addresses are not sent to Analytics."], ["How we use it", "Form details are used to reply to you and manage newsletter subscriptions. Analytics helps us understand aggregate site usage and successful sign-ups or enquiries. We do not sell personal data."], ["Sharing", "Form processing and analytics use the providers described above, including Firebase and Google when analytics is enabled."], ["Your choices", "Analytics is disabled until the site’s public Firebase configuration is provided. You can manage data and advertising settings through Google’s available controls. Ask us about information submitted through the forms using the contact page."]] },
-  terms: { name: "Terms", title: "Terms of service", intro: "Draft pending legal review. It is not legal advice.", legal: true,
-    text: [["Services", "Work is agreed in a written statement of work for each project."], ["Payment and scope", "Fees, milestones and scope changes are set out in that written agreement."], ["Ownership", "Rights to delivered work are defined in the agreement before work begins."], ["Liability", "Liability is limited to the extent the law permits and as set out in the agreement."]] },
+    ]
+  },
+  privacy: {
+    name: "Privacy", title: "Privacy policy", intro: "Draft pending legal review. This summary describes the website’s current forms and optional analytics.", legal: true,
+    text: [["What we collect", "Details you send directly through the contact or newsletter forms. When Firebase Analytics is configured, Google Analytics may also collect page views, session activity, and browser or device information. Form contents and email addresses are not sent to Analytics."], ["How we use it", "Form details are used to reply to you and manage newsletter subscriptions. Analytics helps us understand aggregate site usage and successful sign-ups or enquiries. We do not sell personal data."], ["Sharing", "Form processing and analytics use the providers described above, including Firebase and Google when analytics is enabled."], ["Your choices", "Analytics is disabled until the site’s public Firebase configuration is provided. You can manage data and advertising settings through Google’s available controls. Ask us about information submitted through the forms using the contact page."]]
+  },
+  terms: {
+    name: "Terms", title: "Terms of service", intro: "Draft pending legal review. It is not legal advice.", legal: true,
+    text: [["Services", "Work is agreed in a written statement of work for each project."], ["Payment and scope", "Fees, milestones and scope changes are set out in that written agreement."], ["Ownership", "Rights to delivered work are defined in the agreement before work begins."], ["Liability", "Liability is limited to the extent the law permits and as set out in the agreement."]]
+  },
 };
 
 export const pipeline: Step[] = [
@@ -119,25 +141,31 @@ export const projects: Project[] = [
 
 export type Post = { slug: string; title: string; excerpt: string; icon: string; body?: string[] };
 export const posts: Post[] = [
-  { slug: "mvp-questions", icon: "rocket", title: "Before Building an MVP: 7 Questions That Save Time Later", excerpt: "An MVP is a test, not a smaller version of the final product. Seven questions help decide what belongs in it.", body: [
-    "An MVP is a test, not a smaller version of the final product. These seven questions help decide what belongs in it.",
-    "1. Who is the first user, and what are they trying to get done? Name a specific person or role, not a market.",
-    "2. What do they do today? The existing workaround, even a spreadsheet, shows what the product has to beat.",
-    "3. What is the one outcome the first release must deliver? If you cannot say it in a sentence, the scope is too wide.",
-    "4. What would you need to see to call it a success? Choose a measurable signal before building.",
-    "5. Which assumptions carry the most risk? Test the riskiest ones first.",
-    "6. What can be done by hand for now? Manual steps behind the scenes are fine at this stage.",
-    "7. What happens after launch? Decide who fixes, who supports and who decides what comes next."] },
-  { slug: "react-native-or-native", icon: "mobile", title: "React Native or Native Apps? A Product Decision Framework", excerpt: "Both can produce a good app. The decision is about your product and your team, not which technology is better.", body: [
-    "Both choices can produce a good app. The decision is about your product and your team, not about which technology is better.",
-    "Choose React Native when you need Android and iOS together, your screens are mostly forms, lists and content, and a small team has to move quickly. One codebase also keeps behaviour consistent across platforms.",
-    "Choose fully native when the product depends on deep platform features such as advanced camera or audio work, heavy graphics, or very new operating system capabilities that cross-platform tools have not caught up with.",
-    "Ask four questions: which platforms are needed at launch, which device features are essential, who will maintain the app, and how much performance headroom the experience really needs. If most answers point to shared screens and standard features, start with React Native and write native modules only where they matter."] },
-  { slug: "automation-or-not", icon: "gears", title: "When a Workflow Needs Automation, and When It Doesn’t", excerpt: "Automate tasks that are frequent, rule-based and costly in time. Fix unclear processes first.", body: [
-    "Automation is worth building when a task is frequent, follows clear rules and costs real time. It is a poor investment when the process itself is still unclear.",
-    "Start by writing the manual process down. If two people describe it differently, fix the process first.",
-    "Good candidates are repetitive hand-offs, copying data between systems, and routine status updates. Poor candidates are decisions that depend on judgement or on information that is rarely written down.",
-    "When AI is involved, keep a person in the loop for anything that affects people or money, show where an answer came from, and measure mistakes before expanding the scope."] },
+  {
+    slug: "mvp-questions", icon: "rocket", title: "Before Building an MVP: 7 Questions That Save Time Later", excerpt: "An MVP is a test, not a smaller version of the final product. Seven questions help decide what belongs in it.", body: [
+      "An MVP is a test, not a smaller version of the final product. These seven questions help decide what belongs in it.",
+      "1. Who is the first user, and what are they trying to get done? Name a specific person or role, not a market.",
+      "2. What do they do today? The existing workaround, even a spreadsheet, shows what the product has to beat.",
+      "3. What is the one outcome the first release must deliver? If you cannot say it in a sentence, the scope is too wide.",
+      "4. What would you need to see to call it a success? Choose a measurable signal before building.",
+      "5. Which assumptions carry the most risk? Test the riskiest ones first.",
+      "6. What can be done by hand for now? Manual steps behind the scenes are fine at this stage.",
+      "7. What happens after launch? Decide who fixes, who supports and who decides what comes next."]
+  },
+  {
+    slug: "react-native-or-native", icon: "mobile", title: "React Native or Native Apps? A Product Decision Framework", excerpt: "Both can produce a good app. The decision is about your product and your team, not which technology is better.", body: [
+      "Both choices can produce a good app. The decision is about your product and your team, not about which technology is better.",
+      "Choose React Native when you need Android and iOS together, your screens are mostly forms, lists and content, and a small team has to move quickly. One codebase also keeps behaviour consistent across platforms.",
+      "Choose fully native when the product depends on deep platform features such as advanced camera or audio work, heavy graphics, or very new operating system capabilities that cross-platform tools have not caught up with.",
+      "Ask four questions: which platforms are needed at launch, which device features are essential, who will maintain the app, and how much performance headroom the experience really needs. If most answers point to shared screens and standard features, start with React Native and write native modules only where they matter."]
+  },
+  {
+    slug: "automation-or-not", icon: "gears", title: "When a Workflow Needs Automation, and When It Doesn’t", excerpt: "Automate tasks that are frequent, rule-based and costly in time. Fix unclear processes first.", body: [
+      "Automation is worth building when a task is frequent, follows clear rules and costs real time. It is a poor investment when the process itself is still unclear.",
+      "Start by writing the manual process down. If two people describe it differently, fix the process first.",
+      "Good candidates are repetitive hand-offs, copying data between systems, and routine status updates. Poor candidates are decisions that depend on judgement or on information that is rarely written down.",
+      "When AI is involved, keep a person in the loop for anything that affects people or money, show where an answer came from, and measure mistakes before expanding the scope."]
+  },
   { slug: "react-modernization-checklist", icon: "code", title: "A Practical Checklist Before Modernizing a React App", excerpt: "" },
   { slug: "trustworthy-knowledge-assistant", icon: "book", title: "What Makes an Internal Knowledge Assistant Trustworthy?", excerpt: "" },
   { slug: "small-business-dashboard", icon: "chart", title: "A Small Business Dashboard: What to Build First", excerpt: "" },
@@ -145,6 +173,10 @@ export const posts: Post[] = [
 
 export type Client = { name: string; sample?: boolean };
 export type Review = { quote: string; name: string; role: string; sample?: boolean };
-// Add real, permission-cleared entries here. Entries marked sample appear in development only.
-export const clients: Client[] = ["Client A", "Client B", "Client C", "Client D", "Client E", "Client F"].map((name) => ({ name, sample: true }));
-export const reviews: Review[] = [1, 2, 3].map((n) => ({ quote: "Sample review text. Replace it with a real client quote used with their permission.", name: `Client name ${n}`, role: "Role, Company", sample: true }));
+
+
+export const clients: Client[] = ["Kamal Coco Products"].map((name) => ({ name, sample: false }));
+
+export const reviews: Review[] = [{
+  quote: "Dhidroid understood our brand vision and brought Kalai Coco Products to life through a professional, user-friendly website. The attention to detail, technical expertise, and commitment to quality made the development experience seamless. We truly appreciate the dedication and support throughout our digital journey.", name: "Kalai Coco Products", role: "Founder & CEO", sample: false
+}];

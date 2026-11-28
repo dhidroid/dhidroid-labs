@@ -27,6 +27,20 @@ The site presents the studio's services, selected work, labs, development proces
 npm install
 ```
 
+### UI components and styles
+
+The project uses TypeScript with a root `@/` alias, Tailwind CSS 4 with
+PostCSS, and shadcn-compatible primitives in `components/ui`. The shared
+directory matches the imports in registry blocks and gives the shadcn CLI
+one destination for primitives used by multiple routes.
+
+`app/tailwind.css` defines utility tokens and animations. Existing site
+styles live in `app/globals.css`. The configuration in `components.json`
+points the CLI at the Tailwind stylesheet. Use `npx shadcn@latest add <name>`
+to add another primitive. To set up the same structure in a fresh Next.js
+project, select TypeScript and Tailwind during `create-next-app`, then run
+`npx shadcn@latest init` and choose `@/components/ui` for the UI alias.
+
 ### Development
 
 Copy `.env.example` to `.env` and add your local Firebase web-app values if you
@@ -44,21 +58,58 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 npm run build
 ```
 
-The static site is generated in `out/`. To preview that build locally, run:
+OpenNext builds the Next.js server and static assets into `.open-next/`.
+To preview that build in the Cloudflare Workers runtime, run:
 
 ```bash
 npm run start
 ```
 
 Cloudflare's Git integration publishes the site when changes are pushed to
-`main`. GitHub Actions does not deploy the site; it runs tests and builds on
-`main`, `production`, and pull requests.
+`main`. The Workers build command is `npm run build`, and the deploy command
+is `npx wrangler deploy`. GitHub Actions runs tests and builds on `main`,
+`production`, and pull requests.
 
-The Cloudflare deployment is a static export: `/api/newsletter` is available
-only in local Next.js development and is not deployed to Cloudflare. Set
+The `/api/newsletter` route is available in local Next.js development. Set
 `NEXT_PUBLIC_NEWSLETTER_API_URL` in the Cloudflare build environment to the
 HTTPS Firebase `newsletterSignup` function URL. Do not set it to the site
 origin or a relative `/api/...` path.
+
+### Sanity content and SEO
+
+The site reads the public `production` dataset on Sanity project `pjmjgioq`.
+Use the server environment variables `SANITY_PROJECT_ID` and `SANITY_DATASET`
+to point a development or preview server at a different public dataset.
+
+- Published `project` and `post` documents feed the homepage portfolio,
+  indexes, detail pages, and sitemap. The homepage shows up to five projects,
+  prioritizing `featured` documents and then the most recently updated.
+  Existing repository articles and prototypes keep their URLs. Sanity entries
+  take precedence when a slug matches.
+- Project cards and detail pages show stack icons from the Sanity stack field
+  or named technologies in the project description and solution. Equivalent
+  names share an icon, and technologies without a logo get a labeled symbol.
+- Page metadata and social cards use published titles, descriptions, and
+  cover images from Sanity. Optional `seo` objects on posts and projects accept
+  `title`, `description`, and a Sanity `image`. An optional `pageSeo` document
+  accepts the same fields and a `path` such as `/projects`. An optional
+  `siteSettings.seo` object sets homepage defaults and a site-wide share image.
+- Optional `faq` documents use `question`, `answer`, and `order`; the FAQ
+  page otherwise shows the studio’s existing questions. Optional `client`
+  documents use `name` and `order`. Published `review` or `testimonial`
+  documents feed the homepage carousel and can include an avatar, company
+  logo, and project reference. Sample reviews appear only in development.
+- Articles and project details render Portable Text and Markdown from Sanity
+  or local MDX. Article cover images appear on the blog index and detail
+  pages. Recognized technologies in subheadings get icons, and posts can
+  link to projects in their body or through `relatedProjects` references.
+- The same-origin live endpoint forwards Sanity's published change events.
+  Open pages refresh their server-rendered content after a published change.
+  New project and blog URLs and sitemap updates require no site rebuild.
+
+See the [Sanity Live Content API](https://www.sanity.io/docs/http-reference/live)
+and [Cloudflare's Next.js setup](https://developers.cloudflare.com/workers/framework-guides/web-apps/nextjs/)
+for the upstream configuration.
 
 ### Tests
 
@@ -122,8 +173,8 @@ email addresses.
 | Command | Description |
 | --- | --- |
 | `npm run dev` | Starts the development server |
-| `npm run build` | Creates an optimized static production build in `out/` |
-| `npm run start` | Previews the built static site with Wrangler |
+| `npm run build` | Builds the Next.js site and Cloudflare Worker in `.open-next/` |
+| `npm run start` | Previews the built Cloudflare Worker locally |
 | `npm test` | Runs component tests with Vitest and Testing Library |
 | `npm run test:e2e` | Runs browser end-to-end tests with Playwright |
 | `npm run firebase:deploy -- --project <PROJECT_ID>` | Deploys the newsletter and SMTP notification functions, Firestore rules, and Realtime Database rules |
@@ -167,7 +218,7 @@ The studio provides a custom newsletter composition and dispatch system:
 4. Set `NEXT_PUBLIC_NEWSLETTER_API_URL` in the local `.env` and as a GitHub
    Actions repository variable to the deployed function URL
    (`https://<REGION>-<PROJECT_ID>.cloudfunctions.net/newsletterSignup`).
-   This value is embedded into the static site at build time.
+   This public value is embedded at build time.
 
 The root `.env` is not automatically loaded by Firebase Functions. Copy its
 non-secret SMTP settings into the project parameter file, and set `SMTP_PASS`

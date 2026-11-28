@@ -1,0 +1,14 @@
+.carousel {
+  container-type: inline-size;
+  min-inline-size: 0;
+}
+
+.carouselCard {
+  inline-size: min(24rem, calc(100vw - 5rem));
+  inline-size: min(24rem, 100cqi);
+}
+
+.card blockquote,
+.card figcaption {
+  overflow-wrap: anywhere;
+}

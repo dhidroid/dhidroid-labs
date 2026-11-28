@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "../../lib/seo";
 import { developers } from "./data";
 import { Ico } from "../icons";
 import { Cta } from "../cta";
 import styles from "./developers.module.css";
 
-export const metadata: Metadata = {
-  title: "Developers | Dhidroid Labs",
-  description: "Meet the founder and engineering lead at Dhidroid Labs, an independent software studio.",
-};
+export function generateMetadata() {
+  return pageMetadata("/developers", {
+    title: "Developers | Dhidroid Labs",
+    description: "Meet the founder and engineering lead at Dhidroid Labs, an independent software studio.",
+  });
+}
 
 const workingPrinciples = [
   ["user", "Direct access to your engineer", "Discuss scope, trade-offs and feedback with the person building the product."],

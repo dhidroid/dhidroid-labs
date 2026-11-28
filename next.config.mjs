@@ -1,31 +1,25 @@
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
-import createMDX from "@next/mdx";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-
-const withMDX = createMDX({
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeSlug],
-  },
-});
+import { resolve } from "node:path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
-  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+  htmlLimitedBots: /.*/,
+  webpack(config) {
+    config.module.rules.push({ test: /\.mdx?$/, include: resolve("content"), type: "asset/source" });
+    return config;
+  },
 };
 
 export default (phase) => {
-  if (phase !== PHASE_DEVELOPMENT_SERVER) return withMDX(nextConfig);
+  if (phase !== PHASE_DEVELOPMENT_SERVER) return nextConfig;
 
   // Next sets PORT to the actual listening port before loading the dev config.
   const port = process.env.PORT;
   const devDirectory = port && /^\d+$/.test(port) ? `.next-dev/${port}` : ".next-dev";
 
-  return withMDX({
+  return {
     ...nextConfig,
-    output: undefined,
+    pageExtensions: ["dev.ts", "tsx", "ts", "jsx", "js"],
     distDir: devDirectory,
-  });
+  };
 };

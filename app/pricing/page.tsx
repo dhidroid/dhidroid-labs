@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "../../lib/seo";
 import { Ico } from "../icons";
 
-export const metadata: Metadata = {
-  title: "Pricing | Dhidroid Labs",
-  description: "Transparent pricing for web, mobile and AI product engineering. Fixed-scope, time-and-materials and retainer engagements based in India.",
-};
+export function generateMetadata() {
+  return pageMetadata("/pricing", {
+    title: "Pricing | Dhidroid Labs",
+    description: "Transparent pricing for web, mobile and AI product engineering. Fixed-scope, time-and-materials and retainer engagements based in India.",
+  });
+}
 
 const plans = [
   {

@@ -1,0 +1,46 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css";
+@import "tw-animate-css";
+
+@theme inline {
+  --font-studio-serif: var(--serif);
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --color-muted: #ebeae5;
+  --color-muted-foreground: #625e57;
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-primary: var(--ink);
+  --color-primary-foreground: var(--card);
+  --color-secondary: #ebeae5;
+  --color-secondary-foreground: var(--ink);
+  --color-accent: #e4e4df;
+  --color-accent-foreground: var(--ink);
+  --color-destructive: #a82529;
+  --color-ring: #2f8fe8;
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration, 40s) linear infinite;
+  --animate-accordion-down: accordion-down .2s ease-out;
+  --animate-accordion-up: accordion-up .2s ease-out;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap, 1rem))); }
+}
+
+@keyframes marquee-vertical {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-100% - var(--gap, 1rem))); }
+}
+
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}

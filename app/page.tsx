@@ -1,20 +1,12 @@
 import Link from "next/link";
 import { Ico } from "./icons";
-import { Radial, Track, type TreeNode } from "./charts";
-import { pipeline, projects } from "./data";
+import { Track } from "./charts";
+import { pipeline } from "./data";
 import { HeroArt } from "./heroart";
-import { TechMarquee, Clients, Reviews } from "./social";
-
-const leaf = (...n: string[]) => n.map((name) => ({ name }));
-const tree: TreeNode = { name: "Dhidroid Labs", children: [
-  { name: "Web apps", children: leaf("React", "TypeScript", "Next.js") },
-  { name: "Mobile apps", children: leaf("React Native", "TypeScript") },
-  { name: "AI and automation", children: leaf("Python", "FastAPI", "RAG") },
-  { name: "MVP and discovery", children: leaf("Prototype", "Milestone plan") },
-  { name: "Backend and APIs", children: leaf("API contracts", "PostgreSQL") },
-  { name: "Cloud and DevOps", children: leaf("Deployment", "Monitoring") },
-  { name: "Modernization", children: leaf("Technical review", "Backlog") },
-] };
+import { TechMarquee, Clients, Reviews, getSocialContent } from "./social";
+import { getProjects } from "../lib/published-content";
+import { pageMetadata } from "../lib/seo";
+import { ProjectStack } from "./project-stack";
 
 const build = [
   ["code", "Web applications", "From customer portals and dashboards to full-stack SaaS products."],
@@ -35,7 +27,15 @@ const steps = [
   ["Improve", "Validate, refine and hand over what comes next."],
 ];
 
-export default function Home() {
+export function generateMetadata() {
+  return pageMetadata("/", {
+    title: "Dhidroid Labs | Web, Mobile & AI Product Engineering",
+    description: "Dhidroid Labs builds thoughtful web apps, React Native mobile products and practical AI automation for founders and growing businesses.",
+  });
+}
+
+export default async function Home() {
+  const [projects, social] = await Promise.all([getProjects(), getSocialContent()]);
   return (
     <main>
       <section className="hero" id="top">
@@ -59,19 +59,27 @@ export default function Home() {
         <p>Founder-led. Built around clear communication, practical scope and responsible engineering. Capabilities and timelines are confirmed per engagement.</p>
       </section>
 
-      <section className="wrap" id="hub">
-        <h2 id="work">Inside the Dhidroid Labs portfolio</h2>
+      <section className="wrap" id="hub" aria-labelledby="work">
+        <h2 id="work">Inside the Dhidroid Labs</h2>
         <p className="portfolio-intro">
-          Dhidroid Labs is a founder-led, one-person studio. These independent prototypes
-          show how the studio approaches mobile software, document search and everyday business workflows.
+          Dhidroid Labs is a founder-led, one-person studio. Explore selected work and prototypes
+          across mobile apps, web platforms and everyday business workflows.
         </p>
         <div className="cards portfolio-projects">
-          {projects.map((project) => (
+          {projects.slice(0, 5).map((project) => (
             <Link key={project.slug} href={`/projects/${project.slug}`} className="c">
-              <span className="ic"><Ico n={project.icon} /></span>
-              <small className="tag">{project.type}</small>
-              <h3>{project.title}</h3>
-              <p>{project.summary}</p>
+              <div className="portfolio-card-header" aria-hidden="true">
+                <span className="ic"><Ico n={project.icon ?? "hammer"} /></span>
+                <span className="portfolio-card-arrow">
+                  <Ico n="arrow-right" />
+                </span>
+              </div>
+              <div>
+                <small className="tag">{project.type}</small>
+                <h3>{project.title}</h3>
+                <p>{project.summary}</p>
+                <ProjectStack technologies={project.stack} />
+              </div>
             </Link>
           ))}
         </div>
@@ -82,11 +90,7 @@ export default function Home() {
         <div className="cards">
           {build.map(([i, t, b]) => <Link key={t} href="/services" className="c"><span className="ic"><Ico n={i} /></span><h3>{t}</h3><p>{b}</p></Link>)}
         </div>
-        <div className="stage one">
-          <div className="chart scroll"><Radial data={tree} label="Services offered by Dhidroid Labs and the tools or deliverables behind each" /></div>
-        </div>
-        <p className="cap">Seven services — and the tools or deliverables behind each.</p>
-        <div className="three four">{values.map(([a, b]) => <p key={a}><strong>{a}</strong>{b}</p>)}</div>
+        <div className="three four" style={{ marginTop: 48 }}>{values.map(([a, b]) => <p key={a}><strong>{a}</strong>{b}</p>)}</div>
       </section>
 
       <section className="wrap" id="engineering">
@@ -101,9 +105,9 @@ export default function Home() {
         <ol className="steps">{steps.map(([t, d], i) => <li key={t}><em>{i + 1}</em><h3>{t}</h3><p>{d}</p></li>)}</ol>
       </section>
 
-      <Clients />
+      <Clients entries={social.clients} />
 
-      <Reviews />
+      <Reviews entries={social.reviews} />
 
       <section className="sky">
         <h2>Your idea doesn’t need<br /><span>a perfect brief.</span></h2>
