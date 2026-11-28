@@ -14,10 +14,7 @@ const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["nor
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: "Dhidroid Labs | Web, Mobile & AI Product Engineering",
-    template: "%s | Dhidroid Labs",
-  },
+  title: "Dhidroid Labs | Web, Mobile & AI Product Engineering",
   description:
     "Dhidroid Labs is an independent product engineering studio in Chennai, India. We build thoughtful web apps, React Native mobile products and practical AI automation for founders and growing businesses.",
   keywords: [
@@ -54,7 +51,6 @@ export const metadata: Metadata = {
       "Independent product engineering studio building web apps, React Native mobile products and AI automation for founders and growing businesses.",
     creator: "@dhidroid",
   },
-  alternates: { canonical: siteUrl },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
