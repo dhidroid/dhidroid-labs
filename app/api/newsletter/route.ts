@@ -12,8 +12,6 @@
  *   ADMIN_KEY        – Secret for newsletter dispatch (optional)
  */
 
-export const runtime = "edge";
-
 const SITE_ORIGIN =
   process.env.SITE_ORIGIN || "https://dhidroid-labs.dhidroid.workers.dev";
 const MAIL_FROM = process.env.MAIL_FROM || "Dhidroid Labs <hello@dhidroid.com>";
